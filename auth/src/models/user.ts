@@ -6,6 +6,13 @@ import { Password } from "../services/password";
 interface UserAttrs {
   email: string;
   password: string;
+  name: string;
+  rule: string;
+  job_title: string;
+  phone: string;
+  city: string;
+  address: string;
+  postcode: number;
 }
 
 // An interface that describes the properties
@@ -19,7 +26,15 @@ interface UserModel extends mongoose.Model<UserDoc> {
 interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
+  name: string;
+  rule: string;
+  job_title: string;
+  phone: string;
+  city: string;
+  address: string;
+  postcode: number;
 }
+
 
 const userSchema = new mongoose.Schema(
   {
@@ -29,6 +44,34 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    rule: {
+      type: String,
+      required: true,
+    },
+    job_title: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    address: {
+      type: String,
+      required: true,
+    },
+    postcode: {
+      type: Number,
       required: true,
     },
   },

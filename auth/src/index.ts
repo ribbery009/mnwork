@@ -7,7 +7,7 @@ const start = async () => {
   }
 
   try {
-    await mongoose.connect('mongodb://auth-mongo-srv:27017/auth', {
+    await mongoose.connect(`mongodb+srv://${process.env.DB_URL}?retryWrites=true&w=majority`, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true

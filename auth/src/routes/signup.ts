@@ -18,7 +18,7 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { email, password } = req.body;
+    const { email, password,name,rule,job_title,phone,city,address,postcode } = req.body;
 
     const existingUser = await User.findOne({ email });
 
@@ -26,7 +26,7 @@ router.post(
       throw new BadRequestError('Email in use');
     }
 
-    const user = User.build({ email, password });
+    const user = User.build({email, password,name,rule,job_title,phone,city,address,postcode});
     await user.save();
 
     // Generate JWT
