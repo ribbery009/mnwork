@@ -1,0 +1,29 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300ita‌​lic,400italic,500,500italic,700,700italic,900italic,900);
+
+:root {
+    --color-primary-accent: #2614c7;
+    --color-primary: #000;
+    --color-button: #3d486c;
+    --color-paragraph: #797979;
+    --color-button-text: rgb(255, 255, 255);
+    --color-background: #fff;
+    --color-anchor: #000aff;
+  }
+  
+  [data-theme='dark'] {
+    --color-primary-accent: #00ff4c;
+    --color-primary: #fff;
+    --color-button: #00ff4c;
+    --color-paragraph: #8a8a8a;
+    --color-button-text: rgb(0, 0, 0);
+    --color-background: #22212b;
+    --color-anchor: #00ff4c;
+  }
+
+html, body, html * {
+  font-family: 'Roboto', sans-serif;
+}
+
+body{
+    background-color: #1e1e2f;
+}

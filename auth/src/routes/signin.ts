@@ -2,8 +2,8 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import jwt from 'jsonwebtoken';
 
-import { Password } from '../services/password';
-import { User } from '../models/user';
+import { Password } from '@mnwork/common';
+import { User } from '@mnwork/common';
 import { BadRequestError, validateRequest } from '@mnwork/common';
 
 const router = express.Router();
@@ -39,6 +39,8 @@ router.post(
       {
         id: existingUser.id,
         email: existingUser.email,
+        rule: existingUser.rule,
+        job: existingUser.job_title
       },
       process.env.JWT_KEY!
     );

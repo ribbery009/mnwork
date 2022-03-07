@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { validateRequest } from '@mnwork/common';
-import { Time } from '../models/time';
+import { Time } from '@mnwork/common';
 
 const router = express.Router();
 

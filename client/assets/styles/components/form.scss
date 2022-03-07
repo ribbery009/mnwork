@@ -1,0 +1,72 @@
+.authWrapper {
+    display: block;
+    width: 100%;
+    max-width: 30.0rem;
+    margin: 4rem auto 6rem;
+    background: linear-gradient(0deg,#3358f4,#1d8cf8);
+    border-radius: 15px;
+      box-shadow: 0 0 40px rgba(30, 31, 45, 0.15);
+  
+
+      .button-wrapper{
+        margin-top: 30px;
+        display: flex;
+        justify-content: end;
+      }
+    form{
+      padding: 40px;
+
+      .form-title{
+margin-bottom: 20px;
+      }
+    }
+    .input-wrapper{
+      margin: 20px auto;
+  position: relative;
+    }
+  
+    .input-icon{
+  position: absolute;
+      display: block;
+      background-repeat: no-repeat;
+      width: 25px;
+      height: 30px;
+      left: -80px;
+      margin-top: 13px;
+    }
+    .wrap {
+      border-radius: 15px;
+      overflow: hidden;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  padding:0;
+  
+  background: linear-gradient(180deg, rgba(200,221,255,1) 0%, rgba(155,197,255,1) 82%);
+      .logo-form{
+        max-width: 200px;
+    }
+  
+      h2 {
+        font-size: 2.2rem;
+        line-height: 1;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+        display: block;
+        width: 100%;
+        padding: 0;
+        margin: 0 auto 3rem;
+      }
+  
+  
+      .children{
+  width: 100%;
+  margin-top:100px;
+  margin-bottom: 70px;
+      }
+    }
+  
+  }
