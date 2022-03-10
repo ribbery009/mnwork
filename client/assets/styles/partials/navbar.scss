@@ -1,8 +1,183 @@
 .navbar{
-    background: linear-gradient(0deg,#3358f4,#1d8cf8);
+   
+
+    background: transparent!important;
+
+
+
+    
+    .switch{
+        position: relative;
+display: inline-block;
+width: 60px;
+height: 34px;
+
+input{
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+input:checked + .slider {
+    background-color: #33f321;
+  }
+  
+
+  input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider{
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+
+    &::before{
+        position: absolute;
+    content: '';
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+    }
+}
+        }
 
     .navbar-brand{
-        margin: 10px 20px;
+       
     letter-spacing: 2px;
+    margin-top: 3px;
+    text-transform: uppercase;
+    font-size: 1rem;
+
+    position: relative;
+    display: inline-block;
+
+
+    @media screen and (min-width:991px){
+        margin-left: 20px;
+    }
+    
+
+    }
+
+    .navbar-toggle{
+        padding: .25rem .75rem;
+        font-size: .99925rem;
+        line-height: 1;
+        background-color: initial;
+        border: .0625rem solid transparent;
+        border-radius: .25rem; 
+        
+
+        .navbar-toggler{
+            outline: 0;
+
+            width: 60px;
+            height: 45px;
+            position: relative;
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+            -webkit-transition: .5s ease-in-out;
+            -moz-transition: .5s ease-in-out;
+            -o-transition: .5s ease-in-out;
+            transition: .5s ease-in-out;
+            cursor: pointer;
+border-color: transparent;
+
+            @media screen and (min-width:991px) {
+          display: none;
+            }
+            &:focus{
+                outline: 0;  
+                box-shadow: unset;  
+            }
+
+            span{
+                display: block;
+  border-radius: 9px;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .25s ease-in-out;
+  -moz-transition: .25s ease-in-out;
+  -o-transition: .25s ease-in-out;
+  transition: .25s ease-in-out;
+            }
+        }
+        .navbar-toggler-bar{
+            @media screen and (max-width:991px) {
+                display: block;
+                position: relative;
+                width: 22px;
+                height: 1px;
+                border-radius: 1px;
+                background: var(--color-primary);   
+
+
+
+                &.bar1{
+                
+
+                    top: 0px;
+  -webkit-transform-origin: left center;
+  -moz-transform-origin: left center;
+  -o-transform-origin: left center;
+  transform-origin: left center;
+                }
+                &.bar2{
+                    margin-top: 7px;
+                    width: 17px;
+    transition: width .2s linear;
+                }
+                &.bar3{
+                    -webkit-transform-origin: left center;
+                    -moz-transform-origin: left center;
+                    -o-transform-origin: left center;
+                    transform-origin: left center;
+                    margin-top: 7px;
+
+                }
+
+                &.bar1, &.bar2, &.bar3 {
+                    outline: 1px solid transparent;
+                }
+            }
+
+        
+        }
+        &.toggled{
+
+            .bar1{
+                -webkit-transform: rotate(45deg);
+                    -moz-transform: rotate(45deg);
+                    -o-transform: rotate(45deg);
+                    transform: rotate(45deg);
+                    top: 2px;
+            }
+            .bar2{
+                width: 24px;
+                opacity: 0;
+            }
+            .bar3{
+                -webkit-transform: rotate(-45deg);
+                -moz-transform: rotate(-45deg);
+                -o-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+                bottom:-1px;
+            }
+        }
     }
 }

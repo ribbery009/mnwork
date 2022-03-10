@@ -13,6 +13,7 @@ let usersList = users.map((user) =>{
     };
 return newUser
 })
+// res.send(usersList ? (usersList) : ({}))
 res.send(usersList ? (usersList) : ({}))
 });
 

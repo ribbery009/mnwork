@@ -2,16 +2,24 @@
     display: block;
     width: 100%;
     max-width: 30.0rem;
-    margin: 4rem auto 6rem;
-    background: linear-gradient(0deg,#3358f4,#1d8cf8);
+    margin: 1rem auto 3rem;
+    background: var(--color-card-bg
+    );
     border-radius: 15px;
       box-shadow: 0 0 40px rgba(30, 31, 45, 0.15);
   
 
+
+      .form-group{
+        margin-top: 20px;
+        label{
+          font-weight: 100;
+        }
+      }
       .button-wrapper{
         margin-top: 30px;
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
       }
     form{
       padding: 40px;

@@ -1,24 +1,32 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300ita‌​lic,400italic,500,500italic,700,700italic,900italic,900);
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300ita‌​lic,400italic,500,500italic,700,700italic,900italic,900);
+
+
 
 :root {
-    --color-primary-accent: #2614c7;
-    --color-primary: #000;
-    --color-button: #3d486c;
-    --color-paragraph: #797979;
-    --color-button-text: rgb(255, 255, 255);
-    --color-background: #fff;
-    --color-anchor: #000aff;
-  }
-  
-  [data-theme='dark'] {
-    --color-primary-accent: #00ff4c;
-    --color-primary: #fff;
-    --color-button: #00ff4c;
-    --color-paragraph: #8a8a8a;
-    --color-button-text: rgb(0, 0, 0);
-    --color-background: #22212b;
-    --color-anchor: #00ff4c;
-  }
+  --color-primary: #000;
+--color-boxes-background: #f5f6fa;
+--color-card-bg: white;
+
+  --color-button: #3d486c;
+  --color-paragraph: #797979;
+  --color-button-text: rgb(255, 255, 255);
+  --color-background: #fff;
+  --color-anchor: #000aff;
+}
+
+[data-theme='dark'] {
+  --color-primary: #fff;
+  --color-boxes-background: linear-gradient(#1e1e2f,#1e1e24);
+--color-card-bg: #27293d;
+
+
+  --color-button: #00ff4c;
+  --color-paragraph: #8a8a8a;
+  --color-button-text: rgb(0, 0, 0);
+  --color-background: #22212b;
+  --color-anchor: #00ff4c;
+}
+
 
 html, body, html * {
   font-family: 'Roboto', sans-serif;
@@ -26,4 +34,34 @@ html, body, html * {
 
 body{
     background-color: #1e1e2f;
+
+    a,h3,label{
+      color:var(--color-primary) !important;
+    }
+
+}
+
+
+element.style {
+}
+.perfect-scrollbar-on .main-panel {
+    height: 100%;
+    max-height: 100%;
+}
+.main-panel[data=blue] {
+    border-top: 2px solid #1d8cf8;
+}
+.ps {
+    overflow: hidden!important;
+    overflow-anchor: none;
+    -ms-overflow-style: none;
+    touch-action: auto;
+    -ms-touch-action: auto;
+}
+@media screen and (min-width: 991px){
+  .main-panel, .sidebar, .sidebar-wrapper { 
+    transition-property: top,bottom,width;
+    transition-duration: .2s,.2s,.35s;
+    transition-timing-function: linear,linear,ease;
+}
 }
