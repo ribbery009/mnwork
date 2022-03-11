@@ -26,16 +26,19 @@ router.post(
       throw new BadRequestError('Nem találom a felhasználót!');
     }
 
+    await User.deleteOne({ email:email });
+  
+    existingUser = User.build({email, password,name,rule,job_title,phone,city,address,postcode});
 
-existingUser = req.body;
-    console.log(existingUser)
-    await existingUser?.save();
-    console.log(existingUser)
+
+    await existingUser.save();
+  
+
     // Generate JWT
     const userJwt = jwt.sign(
       {
-        id: existingUser?.id,
-        email: existingUser?.email,
+        id: existingUser.id,
+        email: existingUser.email,
       },
       process.env.JWT_KEY!
     );

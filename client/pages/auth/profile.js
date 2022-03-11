@@ -2,6 +2,7 @@ import { useState,useEffect} from 'react';
 import useRequest from '../../hooks/use-request';
 import InputField from '../../components/inputField';
 import Button from '../../components/button';
+import Router from 'next/router';
 
 export default ({currentUser}) => {
   const [email, setEmail] = useState('');
@@ -33,7 +34,7 @@ export default ({currentUser}) => {
         postcode,
         job_title
     },
- 
+    onSuccess: () => Router.push('/')
   });
 
 
