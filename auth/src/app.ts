@@ -9,6 +9,8 @@ import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
 import { getUsers } from './routes/get-users';
+import { getUser } from './routes/get-user';
+import { userEditRouter } from './routes/useredit';
 import { errorHandler,NotFoundError } from '@mnwork/common';
 
 const app = express();
@@ -26,6 +28,8 @@ app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
 app.use(getUsers);
+app.use(getUser);
+app.use(userEditRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();

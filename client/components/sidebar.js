@@ -17,7 +17,8 @@ export default ({ currentUser }) => {
         currentUser && { label: 'Kijelentkezés', href: '/auth/signout',icon:<ImHistory  /> },
         currentUser && { label: 'Napi Beosztás', href: '/time/timetable',icon:<ImHistory  /> },
         currentUser && { label: 'Itt vagyok', href: '/time/checking',icon:<ImHistory  /> },
-        currentUser && { label: 'Távozás', href: '/time/checkout',icon:<ImHistory  /> }
+        currentUser && { label: 'Távozás', href: '/time/checkout',icon:<ImHistory  /> },
+        currentUser && { label: 'Profil', href: '/auth/profile',icon:<ImHistory  /> }
     ]
         .filter(linkConfig => linkConfig)
         .map(({ label, href, icon}) => {
