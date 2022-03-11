@@ -3,7 +3,15 @@ import { validateRequest } from '@mnwork/common';
 import { Time } from '@mnwork/common';
 
 const router = express.Router();
-
+/*
+status=
+-work
+-working
+-off
+-sick
+-closed restaurant
+-holiday
+*/
 router.post(
   '/api/time/newtime',
   validateRequest,

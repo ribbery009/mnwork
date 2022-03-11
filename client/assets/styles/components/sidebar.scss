@@ -3,7 +3,7 @@
     top: 0;
 
     .main-panel{
-        height: 100%;
+        min-height: 100vh;
         max-height: 100%;
         position: relative;
     float: right;
@@ -11,6 +11,13 @@
     background: var(--color-background);
     transition: all .5s cubic-bezier(.685,.0473,.346,1);
 
+
+    .page{
+        display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    }
     @media screen and (max-width:991px) {
 width:100%;
 

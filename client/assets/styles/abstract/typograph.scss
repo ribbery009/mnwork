@@ -35,8 +35,23 @@ html, body, html * {
 body{
     background-color: #1e1e2f;
 
-    a,h3,label{
+    a,h3,h1,label{
       color:var(--color-primary) !important;
+    }
+
+    .rdt_TableHeadRow{
+background-color: var(--color-card-bg);
+    }
+
+    .sc-egiyK,.rdt_TableCell,.rdt_Pagination{
+      color:var(--color-primary);
+      background-color: var(--color-card-bg);
+    }
+
+    .sc-ezbkAF{
+      svg{
+        color:var(--color-primary);
+      }
     }
 
 }

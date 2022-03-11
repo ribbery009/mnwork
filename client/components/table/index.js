@@ -1,36 +1,15 @@
-
 import DataTable from 'react-data-table-component';
 
-const columns = [
-    {
-        name: 'Title',
-        selector: row => row.title,
-    },
-    {
-        name: 'Year',
-        selector: row => row.year,
-    },
-];
 
-const data = [
-    {
-        id: 1,
-        title: 'Beetlejuice',
-        year: '1988',
-    },
-    {
-        id: 2,
-        title: 'Ghostbusters',
-        year: '1984',
-    },
-]
+export default function Table({data,columns,paginationProp}) {
 
-export default function Table({data}) {
+    console.log("data: ",data)
+    console.log("columns: ",columns)
     return (
         <DataTable
             columns={columns}
             data={data}
-            pagination
+            pagination={paginationProp ? (true): (false)}
         />
     );
 };

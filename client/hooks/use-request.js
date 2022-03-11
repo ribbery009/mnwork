@@ -8,13 +8,21 @@ export default ({ url, method, body, onSuccess }) => {
     try {
       setErrors(null);
       const response = await axios[method](url, body);
-
+      console.log("response: ",response)
       if (onSuccess) {
         onSuccess(response.data);
       }
-
+console.log("url: ",url)
+console.log("method: ",method)
+console.log("body: ",body)
+console.log("onSucc: ",onSuccess)
       return response.data;
     } catch (err) {
+      console.log("url: ",url)
+      console.log("method: ",method)
+      console.log("body: ",body)
+      console.log("onSucc: ",onSuccess)
+      console.log(err)
       setErrors(
         <div className="alert alert-danger">
           <h4>Ooops....</h4>
