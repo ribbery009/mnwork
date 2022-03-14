@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import { validateRequest,BadRequestError } from '@mnwork/common';
 import { Time } from '@mnwork/common';
+import { date } from 'yup';
 
 const router = express.Router();
 
@@ -12,10 +13,10 @@ router.post(
     console.log(req.body)
     console.log(user_id)
     let existingRow = await Time.findOne({ user_id });
-
-
-if(existingRow){
     let dateNow = new Date(new Date().toLocaleString("hu-HU", {timeZone: "Europe/Budapest"}));
+
+if(existingRow && existingRow.start.getFullYear() === dateNow.getFullYear() && existingRow.start.getMonth() === dateNow.getMonth() && existingRow.start.getDate() === dateNow.getDate()){
+    
     existingRow.isHere = true;
     existingRow.status = "working";
     existingRow.live_start = dateNow;
@@ -27,7 +28,7 @@ if(existingRow){
     }
     existingRow.save();
 }
-if (!existingRow) {
+if (!existingRow || existingRow === null) {
   throw new BadRequestError('Invalid credentials');
 }
     res.status(200).send(existingRow);

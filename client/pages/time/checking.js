@@ -41,12 +41,12 @@ export default ({ currentUser }) => {
         fetch(`/api/time/get-time?workDay=${date}`)
             .then((res) => res.json())
             .then((data) => {
-
+console.log(data)
                 let usersList = data.map((user, index) => {
                     console.log("currentU: ", currentUser)
                     console.log(user)
                     let newData = {};
-                    if (user.user_id === currentUser.id && user.status === "work") {
+                    if (user && user.user_id === currentUser.id && user.status === "work") {
                         newData = user;
                     }
 

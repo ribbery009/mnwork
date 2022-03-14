@@ -1,0 +1,27 @@
+
+
+:root {
+    --color-primary: #000;
+  --color-boxes-background: #f5f6fa;
+  --color-card-bg: white;
+  
+    --color-button: #3d486c;
+    --color-paragraph: #797979;
+    --color-button-text: rgb(255, 255, 255);
+    --color-background: #fff;
+    --color-anchor: #000aff;
+  }
+  
+  [data-theme='dark'] {
+    --color-primary: #fff;
+    --color-boxes-background: linear-gradient(#1e1e2f,#1e1e24);
+  --color-card-bg: #27293d;
+  
+  
+    --color-button: #00ff4c;
+    --color-paragraph: #8a8a8a;
+    --color-button-text: rgb(0, 0, 0);
+    --color-background: #22212b;
+    --color-anchor: #00ff4c;
+  }
+  

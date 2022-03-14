@@ -46,7 +46,7 @@ export default ({ currentUser }) => {
                     console.log("currentU: ", currentUser)
                     console.log(user)
                     let newData = {};
-                    if (user.user_id === currentUser.id && user.status === "working") {
+                    if (user && user.user_id === currentUser.id && user.status === "working") {
                         newData = user;
                     }
 

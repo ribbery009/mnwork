@@ -28,35 +28,40 @@ export default ({ currentUser }) => {
     fetch(`/api/time/get-time?workDay=${date}`)
       .then((res) => res.json())
       .then((data) => {
-
-        console.log("data1: ",data)
-
         let usersList = data.map((user,index) =>{
-          const startT = timeNow(user.start);
-          const endT = timeNow(user.end);
+let newData =null;
+          if(user){
 
-          let newData = {
-            id:index,
-              name: user.name,
-              start: startT,
-              end: endT
-          };
-
+            const startT = timeNow(user.start);
+            const endT = timeNow(user.end);
+  
+            newData = {
+              id:index,
+                name: user.name,
+                start: startT,
+                end: endT
+            };
+          }
+         
       return newData
       })
 
+      if(!usersList){
         setData(usersList)
+      }
+       
         setLoading(false)
       })
   }, [])
-console.log("data: ",data)
-console.log("currentUser: ",currentUser)
-  return currentUser ? (
-    data ?
-    (<div className='authWrapper'>
+console.log(data)
+  return (
+  <div className="page">
+{currentUser ? ( data ? (<div className='authWrapper'>
       <form>
         <h3 className='form-title'>Napi Beosztás</h3>
         <Table data={data} columns={columns}/>
       </form>
-    </div>):(<h1>No Data</h1>)) : (<h1>You are NOT signed in</h1>)
+    </div>):(<h1>A mai napra nincs elérhető beosztás.</h1>)
+    ) : (<h1>You are NOT signed in</h1>)
+  }</div>)
 }
