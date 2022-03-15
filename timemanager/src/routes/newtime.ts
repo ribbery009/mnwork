@@ -28,14 +28,19 @@ router.post(
   '/api/time/newtime',
   validateRequest,
   async (req: Request, res: Response) => {
-    const { start,end,name,creator,status,user_id} = req.body;
-    const late_time_min=0;
+
+    const { start, end, name_and_email, creator, status } = req.body;
+    const late_time_min = 0;
     const late = false;
     const isHere = false;
-    const live_start =new Date(); 
+    const live_start = new Date();
     const live_end = new Date();
-    const time = Time.build({start,end,name,late,late_time_min,creator,isHere,status,live_start,live_end,user_id});
-    
+
+    const helper = name_and_email.split("-");
+    const name = helper[0];
+    const user_email = helper[1];
+    const time = Time.build({ start, end, name, late, late_time_min, creator, isHere, status, live_start, live_end, user_email });
+
     time.save();
     console.log(time)
     res.status(201).send(time);

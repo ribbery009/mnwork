@@ -1,10 +1,9 @@
-import React,{useState,useEffect} from "react";
+import React,{useEffect} from "react";
 
 
-const CustomSelect = ({optionsList}) => {
+const CustomSelect = ({optionsList, setDefaultSelectText,defaultSelectText,setShowOptionList,showOptionList}) => {
 
-  const [showOptionList,setShowOptionList] = useState(false); 
-  const [defaultSelectText,setDefaultSelectText] = useState("Válasszon a listából"); 
+  
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -50,11 +49,12 @@ setShowOptionList(false)
         {showOptionList === true && (
           <ul className="select-options">
             {optionsList.map(option => {
-              console.log(option)
+    
               return (
                 <li
                   className="custom-select-option"
-                  data-name={option.name}
+                  data-name={option.email ? (option.name + "-"+ (option.email)) : (option.name)}
+            
                   key={option.name}
                   onClick={handleOptionClick}
                 >

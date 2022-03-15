@@ -11,14 +11,20 @@ export default ({ currentUser }) => {
   const [data, setData] = useState(null)
   const [isLoading, setLoading] = useState(false)
   const [startDate, setStartDate] = useState(new Date());
-  const [time, setTime] = useState(new Date());
+  const [time, setEndDate] = useState(new Date());
   const [optionsList, setOptionList] = useState([{ name: "munka"}, {name: "szabad"}, {name: "beteg"}, {name: "zárva az étterem"}, {name: "nyaralás" }])
 
+  const [showOptionListName,setShowOptionListName] = useState(false); 
+  const [defaultSelectTextName,setDefaultSelectTextName] = useState("Válasszon a listából"); 
+
+  const [showOptionListState,setShowOptionListState] = useState(false); 
+  const [defaultSelectTextState,setDefaultSelectTextState] = useState("Válasszon a listából"); 
+
   const { doRequest, errors } = useRequest({
-    url: '/api/time/ishere',
+    url: '/api/time/newtime',
     method: 'post',
     body: {
-
+      start:startDate,end:time,name_and_email:defaultSelectTextName,creator:currentUser.id,status:defaultSelectTextState
     },
     // onSuccess: () => Router.push('/')
   });
@@ -53,8 +59,8 @@ export default ({ currentUser }) => {
     )
   }
 
-  console.log(data)
-console.log(optionsList)
+  console.log(currentUser)
+
   return currentUser ? (
     <div className='container'>
       <div className='row'>
@@ -64,11 +70,11 @@ console.log(optionsList)
               <h3 className='form-title'>Beosztás Készítő</h3>
               <div className="form-group">
                 <label>Név és E-mail</label>
-                <CustomSelect optionsList={data} />
+                <CustomSelect optionsList={data} setShowOptionList={setShowOptionListName} setDefaultSelectText={setDefaultSelectTextName} showOptionList={showOptionListName} defaultSelectText={defaultSelectTextName}/>
               </div>
               <div className="form-group">
                 <label>Állapot</label>
-                <CustomSelect optionsList={optionsList} />
+                <CustomSelect optionsList={optionsList} showOptionList={showOptionListState} setShowOptionList={setShowOptionListState} setDefaultSelectText={setDefaultSelectTextState} defaultSelectText={defaultSelectTextState}/>
               </div>
               <div className="form-group">
                 <label>Kezdés</label>
@@ -86,12 +92,12 @@ console.log(optionsList)
                 <label>Zárás</label>
                 <DatePicker
                   selected={time}
-                  onChange={(date) => setStartDate(date)}
+                  onChange={(date) => setEndDate(date)}
                   showTimeSelect
-                  showTimeSelectOnly
+                  timeFormat="HH:mm"
                   timeIntervals={15}
-                  timeCaption="Time"
-                  dateFormat="h:mm aa"
+                  timeCaption="time"
+                  dateFormat="MMMM d, yyyy h:mm aa"
                 />
               </div>
 
