@@ -6,8 +6,9 @@ const router = express.Router();
 router.get('/api/time/get-time', async (req, res) => {
 
     const timeList = await Time.find();
-    let usersList = null;
-    let newRow = null;
+    let usersList = {};
+    let newRow = {};
+    let respList=[{}];
     if (req.query && req.query["startDate"] && req.query["endDate"]) {
       
         let start = new Date(new Date(JSON.stringify(req.query["startDate"])).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
@@ -25,17 +26,30 @@ router.get('/api/time/get-time', async (req, res) => {
         let workDay = new Date(new Date(JSON.stringify(req.query["workDay"])).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
         var dateQuery =  workDay.getFullYear()+'/'+( workDay.getMonth()+1)+'/'+ workDay.getDate();
 
+        let index = 0;
         usersList = timeList.map((time) => {
           var timeStart =  time.start.getFullYear()+'/'+( time.start.getMonth()+1)+'/'+ time.start.getDate();
+
+          console.log("timeStart: ",timeStart)
+
+          console.log("dataQuery: ",dateQuery)
           if(dateQuery === timeStart){
             newRow = time;
-            return newRow;
+            respList[index]=time;
+            index++;
           }
+
+
       })
     }
-
+console.log("users: ",respList)
     // res.send(usersList ? (usersList) : ({}))
-    res.send(usersList ? usersList : {})
+    if (!respList || respList === null) {
+      res.send({})
+    }
+
+
+    res.send(respList)
 });
 
 export { router as getTime };

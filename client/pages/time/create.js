@@ -4,7 +4,7 @@ import Button from '../../components/button';
 import CustomSelect from "../../components/customSelect";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-
+import Router from "next/router";
 
 export default ({ currentUser }) => {
 
@@ -26,7 +26,7 @@ export default ({ currentUser }) => {
     body: {
       start:startDate,end:time,name_and_email:defaultSelectTextName,creator:currentUser.id,status:defaultSelectTextState
     },
-    // onSuccess: () => Router.push('/')
+     onSuccess: () => Router.push('/')
   });
 
 
@@ -54,7 +54,7 @@ export default ({ currentUser }) => {
   if (isLoading) {
     return (
       <div className="page">
-        Betöltés...
+        Betöltés........
       </div>
     )
   }

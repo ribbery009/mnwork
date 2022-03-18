@@ -10,6 +10,20 @@
   
 
 
+      &.timetable{
+        max-width: 40.0rem;
+
+        .delete-button{
+          border: none;
+    box-shadow: none;
+    background: transparent;
+
+    svg{
+      height: 18px;
+    width: 18px;
+    }
+        }
+      }
       .form-group{
         margin-top: 20px;
         label{

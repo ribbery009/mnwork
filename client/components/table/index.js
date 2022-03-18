@@ -1,15 +1,22 @@
 import DataTable from 'react-data-table-component';
 
 
-export default function Table({data,columns,paginationProp}) {
+export default function Table({ data, columns, paginationProp }) {
 
-    console.log("data: ",data)
-    console.log("columns: ",columns)
+
     return (
         <DataTable
+            direction="auto"
+            fixedHeaderScrollHeight="300px"
+            responsive
+            subHeaderAlign="right"
+            subHeaderWrap
+       
+     
+
             columns={columns}
             data={data}
-            pagination={paginationProp ? (true): (false)}
+            pagination={paginationProp ? (true) : (false)}
         />
     );
 };

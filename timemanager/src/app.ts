@@ -7,7 +7,7 @@ import cookieSession from 'cookie-session';
 import {newtime} from './routes/newtime';
 import {isHere} from './routes/isHere';
 import {close} from './routes/close';
-
+import { deleteTime } from './routes/deletetime';
 import { errorHandler,NotFoundError } from '@mnwork/common';
 import { getTime } from './routes/get-time';
 
@@ -25,6 +25,7 @@ app.use(newtime);
 app.use(isHere);
 app.use(close);
 app.use(getTime);
+app.use(deleteTime);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();
