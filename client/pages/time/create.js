@@ -3,7 +3,6 @@ import useRequest from "../../hooks/use-request";
 import Button from '../../components/button';
 import CustomSelect from "../../components/customSelect";
 import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
 import Router from "next/router";
 
 export default ({ currentUser }) => {

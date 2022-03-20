@@ -31,15 +31,20 @@ router.post(
 
     const { user_id } = req.body;
     const articleID = Mongoose.Types.ObjectId(user_id);
+
     console.log(articleID);
   let timeHelper = null;
     if(articleID){
-    timeHelper = Time.findByIdAndRemove(articleID);
+      await Time.deleteOne({ _id: articleID});
+
+      // If no error
+      res.status(200).json("ok");
+      
     }else{  
     throw new BadRequestError('Missing User ID request.');
     }
     
-// Itt tartok nincs kész a törlés!!!! 2022.03.17
+
   console.log(timeHelper)
 if(timeHelper != null){
     res.status(201).send("Successfull delete!");

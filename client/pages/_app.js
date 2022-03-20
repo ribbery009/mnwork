@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import buildClient from '../api/build-client';
 import Header from '../components/partials/header';
 import Sidebar from '../components/sidebar';
+import "react-datepicker/dist/react-datepicker.css";
 import '../assets/styles/main.scss'
 import HambContextProvider from '../components/context/hamburgerContext';
 

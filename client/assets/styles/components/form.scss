@@ -13,6 +13,11 @@
       &.timetable{
         max-width: 40.0rem;
 
+
+        .calendar-wrapper{
+          display: flex;
+          margin-bottom: 30px;
+        }
         .delete-button{
           border: none;
     box-shadow: none;

@@ -5,51 +5,53 @@ const router = express.Router();
 
 router.get('/api/time/get-time', async (req, res) => {
 
-    const timeList = await Time.find();
-    let usersList = {};
-    let newRow = {};
-    let respList=[{}];
-    if (req.query && req.query["startDate"] && req.query["endDate"]) {
-      
-        let start = new Date(new Date(JSON.stringify(req.query["startDate"])).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
-        console.log(req.query["startDate"])
-        let end = new Date(new Date(JSON.stringify(req.query["endDate"])).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
+  const { activity, startDate, endDate } = req.query;
 
-        usersList = timeList.map((time) => {
-            if(time.start >= start && time.start <= end){
-              newRow = time;
-              return newRow;
-            }
-        })
-    }
-    else if (req.query && req.query["workDay"]) {
-        let workDay = new Date(new Date(JSON.stringify(req.query["workDay"])).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
-        var dateQuery =  workDay.getFullYear()+'/'+( workDay.getMonth()+1)+'/'+ workDay.getDate();
+  const timeList = await Time.find();
+  let usersList = {};
+  let newRow = {};
+  var respList = [] as  any
 
-        let index = 0;
-        usersList = timeList.map((time) => {
-          var timeStart =  time.start.getFullYear()+'/'+( time.start.getMonth()+1)+'/'+ time.start.getDate();
+  console.log("resplist: ",respList)
 
-          console.log("timeStart: ",timeStart)
+  if (activity && startDate && endDate) {
+    let queryStart = new Date(new Date(JSON.stringify(startDate)).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
+    // var dateQuery = queryStart.getFullYear() + '/' + (queryStart.getMonth() + 1) + '/' + queryStart.getDate();
 
-          console.log("dataQuery: ",dateQuery)
-          if(dateQuery === timeStart){
-            newRow = time;
-            respList[index]=time;
-            index++;
-          }
+    let queryEnd = new Date(new Date(JSON.stringify(endDate)).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
+    // var dateEndQuery = queryEnd.getFullYear() + '/' + (queryEnd.getMonth() + 1) + '/' + queryEnd.getDate();
+    usersList = timeList.map((time) => {
+      const timeStart = new Date(time.start);
+      const timeEnd = new Date(time.end);
+    
+      if (queryStart <= timeStart && queryEnd >= timeEnd && time.status === activity) {
+        newRow = time;
+
+        respList.push(time);
+      }
 
 
-      })
-    }
-console.log("users: ",respList)
-    // res.send(usersList ? (usersList) : ({}))
-    if (!respList || respList === null) {
-      res.send({})
-    }
+      //összes
+      else if (queryStart <= timeStart && queryEnd >= timeEnd) {
+        newRow = time;
+        respList.push(time);
+      }
 
 
-    res.send(respList)
+    })
+  }
+
+  console.log("respList: ",respList)
+  console.log("respList: ",respList === [{}])
+  // res.send(usersList ? (usersList) : ({}))
+  if (!respList || respList === null) {
+    res.send("no data");
+  } else {
+    res.status(201).send(respList)
+
+  }
+
+
 });
 
 export { router as getTime };
