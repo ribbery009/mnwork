@@ -2,7 +2,6 @@ import DataTable from 'react-data-table-component';
 
 
 export default function Table({ data, columns, paginationProp }) {
-console.log("data: ",data)
 
     return (
         <DataTable
@@ -13,6 +12,7 @@ console.log("data: ",data)
             subHeaderWrap
             columns={columns}
             data={data}
+            noDataComponent="Nincs visszatérő adat"
             pagination={paginationProp ? (true) : (false)}
         />
     );
