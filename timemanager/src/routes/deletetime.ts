@@ -35,21 +35,25 @@ router.post(
     console.log(articleID);
   let timeHelper = null;
     if(articleID){
-      await Time.deleteOne({ _id: articleID});
+
+      try {
+        await Time.deleteOne({ _id: articleID});
+      } catch (error) {
+        throw new BadRequestError('Missing User ID request.');  
+      }
+     
 
       // If no error
-      res.status(200).json("ok");
+     return res.status(200).send("ok");
       
-    }else{  
-    throw new BadRequestError('Missing User ID request.');
     }
     
 
   console.log(timeHelper)
 if(timeHelper != null){
-    res.status(201).send("Successfull delete!");
+   return res.status(201).send("Successfull delete!");
 }else{
-    res.status(201).send({});
+   return res.status(201).send({});
 }
   
   }

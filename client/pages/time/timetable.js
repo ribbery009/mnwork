@@ -38,7 +38,7 @@ export default ({ currentUser }) => {
     body: {
       user_id: rowId
     },
-    onSuccess: () => Router.push('/')
+    // onSuccess: () => Router.push('/')
   });
 
 
@@ -84,20 +84,35 @@ export default ({ currentUser }) => {
     setLoading(false)
   }
 
-  const handleDelete = async (row, e) => {
+  const handChangeRowID = (row, e) => {
+    e.preventDefault();
     setRowId(row.timeId)
-    await doRequest()
+    console.log(row.timeId)
+  }
+
+  const handleDelete = () => {
+    try {
+      doRequest()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {
     if (list && list !== "") {
-      setTable(<Table data={list} columns={timeTableColumnsGenerator(handleDelete)} />)
+      setTable(<Table data={list} columns={timeTableColumnsGenerator(handChangeRowID)} />)
     }
   }, [list])
 
   useEffect(() => {
     sendRequest()
   }, [defaultSelectTextState])
+
+  useEffect(() => {
+    if(rowId !==""){
+      handleDelete()
+    }   
+  }, [rowId])
 
   return (
     <div className="page">
