@@ -1,24 +1,24 @@
 import Link from 'next/link';
 import { useState,useEffect } from 'react';
-import { UserContext } from "../context/hamburgerContext"
+import { IsHamburgerContext } from "../context/hamburgerContext"
 import { useContext } from 'react'
 export default ({ currentUser }) => {
 
-  const { user } = useContext(UserContext)
-  const { dispatch } = useContext(UserContext);
+  const { isHamburgerIcon } = useContext(IsHamburgerContext)
+  const { dispatch } = useContext(IsHamburgerContext);
   const [darkTheme, setDarkTheme] = useState(undefined);
   
 const [classCss,setClass] = useState('');
   const handleClick = () => {
 
 
-    if (user && user["actual"] === "closed" || user === "") {
+    if (isHamburgerIcon && isHamburgerIcon["actual"] === "closed" || isHamburgerIcon === "") {
       setClass("toggled")
-      dispatch({ type: "SET_HAM", user: "toggled" })
+      dispatch({ type: "SET_HAM", isHamburgerIcon: "toggled" })
     }
-    else if (user && user["actual"] === "toggled") {
+    else if (isHamburgerIcon && isHamburgerIcon["actual"] === "toggled") {
       setClass("closed")
-      dispatch({ type: "SET_HAM", user: "closed" })
+      dispatch({ type: "SET_HAM", isHamburgerIcon: "closed" })
     }
 
   }  
@@ -44,7 +44,7 @@ const [classCss,setClass] = useState('');
     }
   }, [darkTheme]);
     useEffect( () => {
-      dispatch({ type: "SET_HAM", user: "closed" })
+      dispatch({ type: "SET_HAM", isHamburgerIcon: "closed" })
 
       const root = window.document.documentElement;
       const initialColorValue = root.style.getPropertyValue(

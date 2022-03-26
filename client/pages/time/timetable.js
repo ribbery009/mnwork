@@ -1,7 +1,5 @@
-//NEM működik a megjelenítés
-
-
 import { GoCalendar } from "react-icons/go";
+import Router from 'next/router'
 import { useState, useEffect } from "react";
 import Table from '../../components/table/index';
 import CustomSelect from "../../components/customSelect";
@@ -30,7 +28,7 @@ export default ({ currentUser }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date(new Date().setDate(startDate.getDate() + 1)));
 
-  const [successQuery, setSuccesQuery] = useState(false);
+  const [reqPending, setReqPending] = useState(false);
 
   const { doRequest, errors } = useRequest({
     url: '/api/time/delete',
@@ -38,7 +36,7 @@ export default ({ currentUser }) => {
     body: {
       user_id: rowId
     },
-    // onSuccess: () => Router.push('/')
+    onSuccess: () => Router.push('/')
   });
 
 
@@ -56,6 +54,7 @@ export default ({ currentUser }) => {
       let data;
       try {
         const url = `/api/time/get-time?activity=${activity}&startDate=${queryStartDate}&endDate=${queryEndDate}`;
+        setReqPending(true);
         data = await FetchData(url);
 
         console.log("data: ", data)
@@ -67,13 +66,12 @@ export default ({ currentUser }) => {
           } else {
             filteredList = dataWrapper(data.filter((item) => item.status === defaultSelectTextState), <AiFillDelete />);
           }
-          setSuccesQuery(true)
           setList(filteredList)
 
         } else {
-          setSuccesQuery(true)
           setList("")
         }
+        setReqPending(false);
       } catch (error) {
         console.log(error.message)
       }
@@ -93,6 +91,8 @@ export default ({ currentUser }) => {
   const handleDelete = () => {
     try {
       doRequest()
+
+      
     } catch (error) {
       console.log(error)
     }

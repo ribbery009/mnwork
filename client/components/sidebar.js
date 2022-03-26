@@ -4,12 +4,12 @@ import Image from 'next/image'
 import { FaBeer } from 'react-icons/fa';
 import { ImHistory } from "react-icons/im";
 import { BiPlusCircle } from "react-icons/bi";
-import { UserContext } from "../components/context/hamburgerContext"
+import { IsHamburgerContext} from "../components/context/hamburgerContext"
 import { useContext } from 'react'
 
 export default ({ currentUser }) => {
 
-    const { user } = useContext(UserContext)
+    const { isHamburgerIcon } = useContext(IsHamburgerContext)
 
     const links = [
         currentUser && currentUser["rule"] === "Boss" && { label: 'Regisztráció', href: '/auth/signup', icon: <BiPlusCircle/> },
@@ -36,7 +36,7 @@ export default ({ currentUser }) => {
 
     return (
 
-        <div className={`sidebar ${user ? user["actual"] ? user["actual"] : user : "closed"}`}>
+        <div className={`sidebar ${isHamburgerIcon ? isHamburgerIcon["actual"] ? isHamburgerIcon["actual"] : isHamburgerIcon : "closed"}`}>
             <div className='sidebar-wrapper'>
                 <div className='logo'>
                     <Link href={'/'}>

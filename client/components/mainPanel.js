@@ -1,13 +1,13 @@
-import { UserContext } from "../components/context/hamburgerContext"
+import { IsHamburgerContext } from "../components/context/hamburgerContext"
 import { useContext } from 'react'
 
 export default (props) => {
 
-    const { user } = useContext(UserContext)
+    const { isHamburgerIcon } = useContext(IsHamburgerContext)
 
     return (
 
-        <div className={`main-panel ${user ? user["actual"] ? user["actual"] : user : "closed"}`}>
+        <div className={`main-panel ${isHamburgerIcon ? isHamburgerIcon["actual"] ? isHamburgerIcon["actual"] : isHamburgerIcon : "closed"}`}>
         { props.children }
         </div>
     );

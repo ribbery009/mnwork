@@ -1,25 +1,25 @@
 import { createContext, useReducer, useEffect } from "react";
-import { userReducer } from "../reducers/hamReducer";
+import { isHamburgeReducer } from "../reducers/hamReducer";
 
-export const UserContext = createContext()
+export const IsHamburgerContext = createContext()
 
 export default function HambContextProvider(props) {
     
 
-    const [user, dispatch] = useReducer(userReducer, [], () => {
+    const [isHamburgerIcon, dispatch] = useReducer(isHamburgeReducer, [], () => {
         if (typeof window !== 'undefined') {    
-        const initialusers = localStorage.getItem("user")
-        return initialusers ? JSON.parse(initialusers) : ""
+        const initialState = localStorage.getItem("isHamburgerIcon")
+        return initialState ? JSON.parse(initialState) : ""
         }
     })
 
     useEffect( () => {
-        localStorage.setItem("user", JSON.stringify(user))
-    }, [user])
+        localStorage.setItem("isHamburgerIcon", JSON.stringify(isHamburgerIcon))
+    }, [isHamburgerIcon])
 
     return (
-        <UserContext.Provider value={{user, dispatch}} userValue={user}>
+        <IsHamburgerContext.Provider value={{isHamburgerIcon, dispatch}} userValue={isHamburgerIcon}>
             { props.children }
-        </UserContext.Provider>
+        </IsHamburgerContext.Provider>
     )
 }
