@@ -12,7 +12,7 @@ import { FetchData } from '../../helpers/fetcData';
 import { hu } from "date-fns/locale";
 import { dataWrapper } from '../../helpers/dataMapper'
 import CustomClipLoader from "../../components/loader";
-
+import Button from '../../components/button';
 registerLocale("hu", hu);
 
 export default ({ currentUser }) => {
@@ -22,11 +22,18 @@ export default ({ currentUser }) => {
 
   const [rowId, setRowId] = useState("")
   const [isLoading, setLoading] = useState(false)
-  const [showOptionListState, setShowOptionListState] = useState(false);
+  
+  const [defaultSelectTextName, setDefaultSelectTextName] = useState("Válasszon a listából");
   const [defaultSelectTextState, setDefaultSelectTextState] = useState("Válasszon a listából");
-  const [optionsList, setOptionList] = useState([{ name: "összes" }, { name: "munka" }, { name: "szabad" }, { name: "beteg" }, { name: "zárva az étterem" }, { name: "nyaralás" }])
+
+  const [defaultSelectEmail, setDefaultSelectEmail] = useState("");
+  
+  const [optionsList, setOptionList] = useState([{ name: "összes" }, { name: "munka" }, { name: "szabad" }, { name: "beteg" }, { name: "zárva az étterem" }, { name: "nyaralás" }, { name: "összes" }])
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date(new Date().setDate(startDate.getDate() + 1)));
+
+  const [data, setData] = useState(null)
+  const [errorMessageTemplate, setErrorMessageTemplate] = useState(null)
 
   const [reqPending, setReqPending] = useState(false);
 
@@ -44,7 +51,6 @@ export default ({ currentUser }) => {
 
     setLoading(true)
 
-
     if (defaultSelectTextState !== "Válasszon a listából") {
       const activity = activitySelector(defaultSelectTextState)
 
@@ -53,8 +59,7 @@ export default ({ currentUser }) => {
       const queryEndDate = getQueryDate(endDate);
       let data;
       try {
-        const url = `/api/time/get-time?activity=${activity}&startDate=${queryStartDate}&endDate=${queryEndDate}`;
-        setReqPending(true);
+        const url = `/api/time/get-time?activity=${activity}&startDate=${queryStartDate}&endDate=${queryEndDate}&email=${defaultSelectEmail}`;
         data = await FetchData(url);
 
         console.log("data: ", data)
@@ -71,9 +76,8 @@ export default ({ currentUser }) => {
         } else {
           setList("")
         }
-        setReqPending(false);
       } catch (error) {
-        console.log(error.message)
+        setErrorMessageTemplate(<ErrorMessage message={error}></ErrorMessage>)
       }
 
 
@@ -81,6 +85,12 @@ export default ({ currentUser }) => {
     }
     setLoading(false)
   }
+
+  const onSubmit = async event => {
+    event.preventDefault();
+
+    await sendRequest();
+  };
 
   const handChangeRowID = (row, e) => {
     e.preventDefault();
@@ -91,12 +101,33 @@ export default ({ currentUser }) => {
   const handleDelete = () => {
     try {
       doRequest()
-
-      
     } catch (error) {
       console.log(error)
     }
   }
+
+  useEffect(() => {
+    setLoading(true)
+    fetch(`/api/users/getusers`)
+      .then((res) => res.json())
+      .then((data) => {
+        
+        if (data) {
+          
+          const newList = {email: "all",job_title: "all",name: "Mindenki"}
+
+          const newArray = [newList].concat(data)
+          data.concat(newArray)
+          console.log("newArray: ",newArray)
+          console.log("data: ", data)
+          setData(newArray)
+          setLoading(false)
+          return data
+        }
+
+      })
+  }, [])
+
 
   useEffect(() => {
     if (list && list !== "") {
@@ -104,14 +135,11 @@ export default ({ currentUser }) => {
     }
   }, [list])
 
-  useEffect(() => {
-    sendRequest()
-  }, [defaultSelectTextState])
 
   useEffect(() => {
-    if(rowId !==""){
+    if (rowId !== "") {
       handleDelete()
-    }   
+    }
   }, [rowId])
 
   return (
@@ -120,7 +148,7 @@ export default ({ currentUser }) => {
         <>
           <CustomClipLoader loading={isLoading}></CustomClipLoader>
           <div className='authWrapper timetable'>
-            <form>
+            <form onSubmit={onSubmit}>
               <h3 className='form-title'>Napi Beosztás</h3>
               <div className="calendar-wrapper">
                 <div className="start-time">
@@ -142,7 +170,12 @@ export default ({ currentUser }) => {
                   />
                 </div>
               </div>
-              <CustomSelect optionsList={optionsList} showOptionList={showOptionListState} setShowOptionList={setShowOptionListState} setDefaultSelectText={setDefaultSelectTextState} defaultSelectText={defaultSelectTextState} />
+              <CustomSelect optionsList={data} setDefaultSelectText={setDefaultSelectTextName} defaultSelectText={defaultSelectTextName} setDefaultSelectEmail={setDefaultSelectEmail} title={"Név: "}/>
+              <CustomSelect optionsList={optionsList} setDefaultSelectText={setDefaultSelectTextState} defaultSelectText={defaultSelectTextState} title={"Státusz"}/>
+              {errorMessageTemplate}
+              <div className='button-wrapper'>
+                <Button classes="noselect" text={"Elküld"}></Button>
+              </div>
               {table}
 
             </form>

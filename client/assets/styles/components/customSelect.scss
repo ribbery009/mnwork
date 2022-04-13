@@ -10,6 +10,7 @@ cursor: pointer;
     box-shadow: 0 0 20px rgba($color: #1E1F2D, $alpha: .15);
     }
       .custom-select-option{
+        justify-content: center;
         display: flex;
         opacity: .8;
 transition: all .3s;

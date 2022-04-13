@@ -14,12 +14,12 @@ export default ({ currentUser }) => {
     const links = [
         currentUser && currentUser["rule"] === "Boss" && { label: 'Regisztráció', href: '/auth/signup', icon: <BiPlusCircle/> },
         !currentUser && { label: 'Bejelentkezés', href: '/auth/signin',icon:<FaBeer /> },
-        currentUser && { label: 'Kijelentkezés', href: '/auth/signout',icon:<ImHistory  /> },
-        currentUser && { label: 'Napi Beosztás', href: '/time/timetable',icon:<ImHistory  /> },
-        currentUser && { label: 'Itt vagyok', href: '/time/checking',icon:<ImHistory  /> },
-        currentUser && { label: 'Távozás', href: '/time/checkout',icon:<ImHistory  /> },
+        currentUser && { label: 'Beosztás készítő', href: '/time/create',icon:<ImHistory  /> },
+        currentUser && { label: 'Beosztás és riportok', href: '/time/timetable',icon:<ImHistory  /> },
         currentUser && { label: 'Profil', href: '/auth/profile',icon:<ImHistory  /> },
-        currentUser && { label: 'Beosztás', href: '/time/create',icon:<ImHistory  /> }
+        currentUser && { label: 'Itt vagyok', href: '/time/checking',icon:<ImHistory  /> },
+        currentUser && { label: 'Távozás', href: '/time/checkout',icon:<ImHistory  /> },     
+        currentUser && { label: 'Kijelentkezés', href: '/auth/signout',icon:<ImHistory  /> }
     ]
         .filter(linkConfig => linkConfig)
         .map(({ label, href, icon}) => {
