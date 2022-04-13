@@ -1,5 +1,6 @@
 export default function ErrorMessage({message}){
 
+  console.log(message.response)
 return(<div className="alert alert-danger">
 <h4>A manóba....</h4>
 <ul className="my-0">

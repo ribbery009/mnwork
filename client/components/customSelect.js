@@ -35,7 +35,7 @@ const CustomSelect = ({ optionsList, setDefaultSelectText, defaultSelectText, ti
   // and list display on selection
   const handleOptionClick = e => {
     setDefaultSelectText(e.target.getAttribute("data-name"))
-
+console.log("target: ",e.target)
     if(e.target.getAttribute("data-email") && !_.isNull(e.target.getAttribute("data-email"))){
       setDefaultSelectEmail(e.target.getAttribute("data-email"))
     }

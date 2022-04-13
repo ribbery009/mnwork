@@ -13,6 +13,7 @@ import { hu } from "date-fns/locale";
 import { dataWrapper } from '../../helpers/dataMapper'
 import CustomClipLoader from "../../components/loader";
 import Button from '../../components/button';
+import ErrorMessage from '../../components/error/template'
 registerLocale("hu", hu);
 
 export default ({ currentUser }) => {
@@ -28,7 +29,7 @@ export default ({ currentUser }) => {
 
   const [defaultSelectEmail, setDefaultSelectEmail] = useState("");
   
-  const [optionsList, setOptionList] = useState([{ name: "összes" }, { name: "munka" }, { name: "szabad" }, { name: "beteg" }, { name: "zárva az étterem" }, { name: "nyaralás" }, { name: "összes" }])
+  const [optionsList, setOptionList] = useState([{ name: "mindegyik" }, { name: "munka" }, { name: "szabad" }, { name: "beteg" }, { name: "zárva az étterem" }, { name: "nyaralás" }, { name: "összes" }])
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date(new Date().setDate(startDate.getDate() + 1)));
 
@@ -61,12 +62,10 @@ export default ({ currentUser }) => {
       try {
         const url = `/api/time/get-time?activity=${activity}&startDate=${queryStartDate}&endDate=${queryEndDate}&email=${defaultSelectEmail}`;
         data = await FetchData(url);
-
-        console.log("data: ", data)
         if (data && data !== "no data!" && data.length > 0) {
 
           let filteredList;
-          if (defaultSelectTextState === "összes") {
+          if (defaultSelectTextState === "mindegyik") {
             filteredList = dataWrapper(data, <AiFillDelete />);
           } else {
             filteredList = dataWrapper(data.filter((item) => item.status === defaultSelectTextState), <AiFillDelete />);
@@ -142,6 +141,7 @@ export default ({ currentUser }) => {
     }
   }, [rowId])
 
+  console.log('def text: ',defaultSelectTextState)
   return (
     <div className="page">
       {currentUser ? (
