@@ -170,7 +170,7 @@ export default ({ currentUser }) => {
                   />
                 </div>
               </div>
-              <CustomSelect optionsList={data} setDefaultSelectText={setDefaultSelectTextName} defaultSelectText={defaultSelectTextName} setDefaultSelectEmail={setDefaultSelectEmail} title={"Név: "}/>
+              <CustomSelect optionsList={data} setDefaultSelectText={setDefaultSelectTextName} defaultSelectText={defaultSelectTextName} setEmail={setDefaultSelectEmail} title={"Név: "}/>
               <CustomSelect optionsList={optionsList} setDefaultSelectText={setDefaultSelectTextState} defaultSelectText={defaultSelectTextState} title={"Státusz"}/>
               {errorMessageTemplate}
               <div className='button-wrapper'>

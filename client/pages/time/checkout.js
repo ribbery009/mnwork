@@ -4,6 +4,7 @@ import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import useRequest from '../../hooks/use-request';
 import Router from 'next/router';
+import { getQueryDate, activitySelector } from "../../helpers/functions";
 
 
 export default ({ currentUser }) => {
@@ -11,14 +12,15 @@ export default ({ currentUser }) => {
     const [data, setData] = useState([])
     const [isLoading, setLoading] = useState(false)
     const [date, setDate] = useState(new Date().getFullYear() + '-' + (new Date().getMonth() + 1 < 10 ? "0" + (new Date().getMonth() + 1) : (new Date().getMonth() + 1)) + '-' + new Date().getDate());
-
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date(new Date().setDate(startDate.getDate() + 1)));
     const [open, setOpen] = useState(false);
 
     const { doRequest, errors } = useRequest({
         url: '/api/time/close',
         method: 'post',
         body: {
-            user_id:data[0]?.user_id
+            time_id:data[0]?.id
         },
         onSuccess: () => Router.push('/')
     });
@@ -38,15 +40,17 @@ export default ({ currentUser }) => {
 
     useEffect(() => {
         setLoading(true)
-        fetch(`/api/time/get-time?workDay=${date}`)
+        const queryStartDate = getQueryDate(startDate);
+        const queryEndDate = getQueryDate(endDate);
+        fetch(`/api/time/get-time?activity=munka&startDate=${queryStartDate}&endDate=${queryEndDate}&email=${currentUser.email}`)
             .then((res) => res.json())
             .then((data) => {
-
+                console.log(data)
                 let usersList = data.map((user, index) => {
                     console.log("currentU: ", currentUser)
                     console.log(user)
                     let newData = {};
-                    if (user && user.user_id === currentUser.id && user.status === "working") {
+                    if (user) {
                         newData = user;
                     }
 
@@ -60,8 +64,10 @@ export default ({ currentUser }) => {
             })
     }, [])
 
+    console.log(data[0]?.status === "munka") && (data[0]?.isChecked) && !(data[0]?.isFinished)
+    console.log(data[0])
     return currentUser ? (
-        data[0]?.status === "working" ?
+        (data[0]?.status === "munka") && (data[0]?.isChecked) && !(data[0]?.isFinished)?
             (<div className='authWrapper'>
                 <form>
 

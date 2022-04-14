@@ -33,13 +33,15 @@ router.post(
     const late_time_min = 0;
     const late = false;
     const isHere = false;
+    const isFinished = false;
+    const isChecked = false;
     const live_start = new Date();
     const live_end = new Date();
 
     const helper = name_and_email.split("-");
     const name = helper[0];
     const user_email = helper[1];
-    const time = Time.build({ start, end, name, late, late_time_min, creator, isHere, status, live_start, live_end, user_email });
+    const time = Time.build({ start, end, name, late, late_time_min, creator, isHere, status, live_start, live_end, user_email,isFinished,isChecked });
 
     time.save();
     console.log(time)

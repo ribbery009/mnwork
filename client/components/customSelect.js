@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 var _ = require('lodash');
 
-const CustomSelect = ({ optionsList, setDefaultSelectText, defaultSelectText, title,setDefaultSelectEmail }) => {
+const CustomSelect = ({ optionsList, setDefaultSelectText, defaultSelectText, title, setEmail }) => {
 
   const [showOptionList, setShowOptionList] = useState(false);
 
@@ -35,13 +35,14 @@ const CustomSelect = ({ optionsList, setDefaultSelectText, defaultSelectText, ti
   // and list display on selection
   const handleOptionClick = e => {
     setDefaultSelectText(e.target.getAttribute("data-name"))
-console.log("target: ",e.target)
-    if(e.target.getAttribute("data-email") && !_.isNull(e.target.getAttribute("data-email"))){
-      setDefaultSelectEmail(e.target.getAttribute("data-email"))
+    console.log("target: ", e.target)
+    if (e.target.getAttribute("data-email") && !_.isNull(e.target.getAttribute("data-email"))) {
+
+      setEmail(e.target.getAttribute("data-email"))
     }
     setShowOptionList(false)
   };
-console.log(optionsList)
+  console.log(optionsList)
   return (
     <div className="custom-select-container">
       <label>{title}</label>

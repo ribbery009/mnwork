@@ -20,7 +20,7 @@ router.get('/api/time/get-time', async (req, res) => {
 
     let queryEnd = new Date(new Date(JSON.stringify(endDate)).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
     // var dateEndQuery = queryEnd.getFullYear() + '/' + (queryEnd.getMonth() + 1) + '/' + queryEnd.getDate();
-
+    new Date(new Date().toLocaleString("hu-HU", {timeZone: "Europe/Budapest"}))
     if (email === "all") {
       usersList = timeList.map((time) => {
         const timeStart = new Date(time.start);
@@ -41,10 +41,11 @@ router.get('/api/time/get-time', async (req, res) => {
       })
     }
     else {
+      console.log("query:",req.query)
       usersList = timeList.map((time) => {
         const timeStart = new Date(time.start);
         const timeEnd = new Date(time.end);
-        console.log("time: ", time)
+        
         if (queryStart <= timeStart && queryEnd >= timeEnd && time.status === activity && time.user_email === email) {
           newRow = time;
 
@@ -68,7 +69,7 @@ router.get('/api/time/get-time', async (req, res) => {
   }
 
   console.log("respList: ", respList)
-  console.log("respList: ", respList === [{}])
+
   // res.send(usersList ? (usersList) : ({}))
   if (!respList || respList === null) {
     res.send("no data");

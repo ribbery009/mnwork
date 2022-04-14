@@ -11,28 +11,34 @@ export default ({ currentUser }) => {
   const [isLoading, setLoading] = useState(false)
   const [startDate, setStartDate] = useState(new Date());
   const [time, setEndDate] = useState(new Date());
-  const [optionsList, setOptionList] = useState([{ name: "munka"}, {name: "szabad"}, {name: "beteg"}, {name: "zárva az étterem"}, {name: "nyaralás" }])
+  const [optionsList, setOptionList] = useState([{ name: "munka" }, { name: "szabad" }, { name: "beteg" }, { name: "zárva az étterem" }, { name: "nyaralás" }])
 
-  const [showOptionListName,setShowOptionListName] = useState(false); 
-  const [defaultSelectTextName,setDefaultSelectTextName] = useState("Válasszon a listából"); 
+  const [showOptionListName, setShowOptionListName] = useState(false);
+  const [defaultSelectTextName, setDefaultSelectTextName] = useState("Válasszon a listából");
 
-  const [showOptionListState,setShowOptionListState] = useState(false); 
-  const [defaultSelectTextState,setDefaultSelectTextState] = useState("Válasszon a listából"); 
+  const [showOptionListState, setShowOptionListState] = useState(false);
+  const [defaultSelectTextState, setDefaultSelectTextState] = useState("Válasszon a listából");
+
+
+  const [defaultSelectEmail, setDefaultSelectEmail] = useState("");
 
   const { doRequest, errors } = useRequest({
     url: '/api/time/newtime',
     method: 'post',
     body: {
-      start:startDate,end:time,name_and_email:defaultSelectTextName,creator:currentUser.id,status:defaultSelectTextState
+      start: startDate, end: time, name_and_email: defaultSelectTextName + "-" + defaultSelectEmail, creator: currentUser.id, status: defaultSelectTextState
     },
-     onSuccess: () => Router.push('/')
+    onSuccess: () => Router.push('/')
   });
 
 
   const onSubmit = async event => {
     event.preventDefault();
 
-    await doRequest();
+    if (startDate && time && defaultSelectTextName && defaultSelectEmail && defaultSelectTextState) {
+      await doRequest();
+    }
+
   };
 
   useEffect(() => {
@@ -69,11 +75,11 @@ export default ({ currentUser }) => {
               <h3 className='form-title'>Beosztás Készítő</h3>
               <div className="form-group">
                 <label>Név és E-mail</label>
-                <CustomSelect optionsList={data} setShowOptionList={setShowOptionListName} setDefaultSelectText={setDefaultSelectTextName} showOptionList={showOptionListName} defaultSelectText={defaultSelectTextName}/>
+                <CustomSelect optionsList={data} setShowOptionList={setShowOptionListName} setDefaultSelectText={setDefaultSelectTextName} showOptionList={showOptionListName} defaultSelectText={defaultSelectTextName} setEmail={setDefaultSelectEmail} />
               </div>
               <div className="form-group">
                 <label>Állapot</label>
-                <CustomSelect optionsList={optionsList} showOptionList={showOptionListState} setShowOptionList={setShowOptionListState} setDefaultSelectText={setDefaultSelectTextState} defaultSelectText={defaultSelectTextState}/>
+                <CustomSelect optionsList={optionsList} showOptionList={showOptionListState} setShowOptionList={setShowOptionListState} setDefaultSelectText={setDefaultSelectTextState} defaultSelectText={defaultSelectTextState} />
               </div>
               <div className="form-group">
                 <label>Kezdés</label>
