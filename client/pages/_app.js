@@ -2,24 +2,38 @@ import 'bootstrap/dist/css/bootstrap.css';
 import buildClient from '../api/build-client';
 import Header from '../components/partials/header';
 import Sidebar from '../components/sidebar';
+
+import { CacheProvider } from '@emotion/react';
+import { ThemeProvider, CssBaseline } from '@mui/material';
+
+import createEmotionCache from '../utility/createEmotionCache';
+import lightTheme from '../styles/theme/lightTheme';
+
 import "react-datepicker/dist/react-datepicker.css";
 import '../assets/styles/main.scss'
 import HambContextProvider from '../components/context/hamburgerContext';
 
 import MainPanel from '../components/mainPanel';
 
-const AppComponent = ({ Component, pageProps, currentUser }) => {
+const clientSideEmotionCache = createEmotionCache();
+
+const AppComponent = ({ Component, pageProps, currentUser, emotionCache = clientSideEmotionCache }) => {
 
   return (
 
     <div className='wrapper'>
-      <HambContextProvider>
-        <Sidebar currentUser={currentUser} />
-        <MainPanel>
-          <Header currentUser={currentUser} />
-          <Component {...pageProps} currentUser={currentUser} />
-        </MainPanel>
-      </HambContextProvider>
+      <CacheProvider value={emotionCache}>
+        <ThemeProvider theme={lightTheme}>
+          <CssBaseline />
+          <HambContextProvider>
+            <Sidebar currentUser={currentUser} />
+            <MainPanel>
+              <Header currentUser={currentUser} />
+              <Component {...pageProps} currentUser={currentUser} />
+            </MainPanel>
+          </HambContextProvider>
+        </ThemeProvider>
+      </CacheProvider>
     </div>
 
   );

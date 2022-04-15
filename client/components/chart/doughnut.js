@@ -27,7 +27,7 @@ import {
     Tooltip,
     SubTitle
 } from 'chart.js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 Chart.register(
     ArcElement,
@@ -59,22 +59,28 @@ moment.locale();
 
 export default function LinePage({ dataList }) {
 
-    const [names, setNames] = useState({ email: "", name: "" })
+    const [name, setData] = useState({ email: "", name: "" })
 
-
-    if (dataList) {
-        let arrayList = [{}];
-        let index = 0;
-        const late = dataList.map(item => {
-            if (!arrayList.includes({ email: item.email, name: item.name })) {
-                return item;
+    useEffect(() => {
+        if (dataList) {
+            let arrayList = [{}];
+            let index = 0;
+            const late = dataList.map(item => {
+                if (!arrayList.includes({ email: item.email, name: item.name })) {
+                    return item;
+                }
             }
-        }
-        )
+            )
 
-        console.log("late: ", late);
-    }
-    dataList.map(item => console.log("Date: ", moment(new Date(new Date(item.start).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }))).format('YYYY MM DD hh:mm')))
+            console.log("late: ", late);
+
+            dataList.map(item => console.log("Date: ", moment(new Date(new Date(item.start).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }))).format('YYYY MM DD hh:mm')))
+
+            setData(data)
+        }
+    }, [])
+
+
     const data = {
         backgroundColor: [
             "rgb(2, 88, 255)",
