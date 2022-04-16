@@ -31,7 +31,7 @@ export default ({ currentUser }) => {
 
   const [defaultSelectEmail, setDefaultSelectEmail] = useState("");
 
-  const [optionsList, setOptionList] = useState([{ name: "mindegyik" }, { name: "munka" }, { name: "szabad" }, { name: "beteg" }, { name: "zárva az étterem" }, { name: "nyaralás" }, { name: "összes" }])
+  const [optionsList, setOptionList] = useState([{ name: "mindegyik" }, { name: "munka" }, { name: "szabad" }, { name: "beteg" },{ name: "itt van" }, { name: "zárva az étterem" }, { name: "nyaralás" }, { name: "késés" }])
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date(new Date().setDate(startDate.getDate() + 1)));
 
@@ -182,8 +182,9 @@ export default ({ currentUser }) => {
                 </div>
                 {table}
               </form>
+
               <div className="charts-wrapper">
-                {tabComponent}
+                <TabComponent list={list} startDate={startDate} endDate={endDate} name={defaultSelectTextName} status={defaultSelectTextState}/>
               </div>
             </div>
           </div>

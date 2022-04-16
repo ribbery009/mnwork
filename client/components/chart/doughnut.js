@@ -57,9 +57,9 @@ Chart.register(
 );
 moment.locale();
 
-export default function LinePage({ dataList }) {
+export default function ChartComponent({ dataList,name,status,labels }) {
 
-    const [name, setData] = useState({ email: "", name: "" })
+    
 
     useEffect(() => {
         if (dataList) {
@@ -88,10 +88,10 @@ export default function LinePage({ dataList }) {
             "rgb(255, 199, 0)",
             "rgb(32, 214, 152)",
         ],
-        labels: ["Event 1", "Event 2", "Event 3", "Event 4"],
+        labels: [labels.map((month) => {return month})],
         datasets: [
             {
-                label: "Késés",
+                label: status,
                 data: [300, 50, 100, 300],
                 backgroundColor: [
                     "rgb(2, 88, 255)",
@@ -114,6 +114,7 @@ export default function LinePage({ dataList }) {
         cutout: 150,
     }
 
+    console.log(dataList)
     return (
         <Doughnut data={data} height={50} width={50} optios={options} />
     )
