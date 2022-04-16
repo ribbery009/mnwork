@@ -57,48 +57,19 @@ Chart.register(
 );
 moment.locale();
 
-export default function ChartComponent({ dataList,name,status,labels }) {
+export default function ChartComponent({ dataList,name,status,labels,colors }) {
 
     
-
-    useEffect(() => {
-        if (dataList) {
-            let arrayList = [{}];
-            let index = 0;
-            const late = dataList.map(item => {
-                if (!arrayList.includes({ email: item.email, name: item.name })) {
-                    return item;
-                }
-            }
-            )
-
-            console.log("late: ", late);
-
-            dataList.map(item => console.log("Date: ", moment(new Date(new Date(item.start).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }))).format('YYYY MM DD hh:mm')))
-
-            setData(data)
-        }
-    }, [])
-
+console.log("colors: ",colors)
 
     const data = {
-        backgroundColor: [
-            "rgb(2, 88, 255)",
-            "rgb(249, 151, 0)",
-            "rgb(255, 199, 0)",
-            "rgb(32, 214, 152)",
-        ],
-        labels: [labels.map((month) => {return month})],
+        backgroundColor: colors.map((color) => {return color}),
+        labels: labels.map((month) => {return month}),
         datasets: [
             {
                 label: status,
-                data: [300, 50, 100, 300],
-                backgroundColor: [
-                    "rgb(2, 88, 255)",
-                    "rgb(249, 151, 0)",
-                    "rgb(255, 199, 0)",
-                    "rgb(32, 214, 152)",
-                ],
+                data: dataList.map(num => {return num}),
+                backgroundColor: colors.map((color) => {return color}),
                 hoverOffset: 4,
             }
         ]
@@ -114,7 +85,6 @@ export default function ChartComponent({ dataList,name,status,labels }) {
         cutout: 150,
     }
 
-    console.log(dataList)
     return (
         <Doughnut data={data} height={50} width={50} optios={options} />
     )

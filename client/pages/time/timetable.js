@@ -2,7 +2,7 @@ import Router from 'next/router'
 import { useState, useEffect } from "react";
 import Table from '../../components/table/index';
 import CustomSelect from "../../components/customSelect";
-import { getQueryDate, activitySelector } from "../../helpers/functions";
+import { getQueryDate, activitySelector,getChartsData } from "../../helpers/functions";
 import { AiFillDelete } from "react-icons/ai";
 import useRequest from "../../hooks/use-request";
 import DatePicker, { registerLocale } from 'react-datepicker';

@@ -17,6 +17,10 @@ export function timeTableColumnsGenerator(handleDelete){
           selector: row => row.status,
         },
         {
+          name: 'Dátum',
+          selector: row => row.date,
+        },
+        {
           name: ' ',
           ignoreRowClick: true,
           cell: row => <button className="delete-button" onClick={e => handleDelete(row, e)}>{row.delete}</button>

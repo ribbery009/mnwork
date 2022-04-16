@@ -4,7 +4,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { useEffect } from 'react';
 import ChartComponent from '../chart/doughnut';
-import { monthDiff,getChartsLabels } from '../../helpers/functions';
+import { monthDiff, getChartsLabels, getChartsData, getRandomRgb } from '../../helpers/functions';
 
 export default function TabComponent({ data, columns, paginationProp, startDate, endDate, list, name, status }) {
 
@@ -37,11 +37,22 @@ export default function TabComponent({ data, columns, paginationProp, startDate,
     //2 dátum különbsége
     const diff = monthDiff(startDate, endDate);
 
-     //labels
-     const chartLabels = getChartsLabels(startDate, diff);
+    //labels
+    const chartLabels = getChartsLabels(startDate, diff);
 
-     
-    console.log("diff",diff)
+    let monthData;
+    let rgbArray =[];
+    if (list) {
+        monthData = getChartsData(list, chartLabels);
+        console.log(monthData)
+        
+        for (let index = 0; index < chartLabels.length; index++) {
+            const element = getRandomRgb();
+            rgbArray.push(element)
+        }
+    }
+
+    console.log("colrs", rgbArray)
     return (
         <>
 
@@ -62,8 +73,7 @@ export default function TabComponent({ data, columns, paginationProp, startDate,
                     {allName && <Tab label="Összes" />}
                 </Tabs>
             </Box>
-            <ChartComponent dataList={list} labels={chartLabels}/>
-            {value}
+            {<ChartComponent dataList={monthData} labels={chartLabels} colors={rgbArray} />}
         </>
     );
 };

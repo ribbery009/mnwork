@@ -18,9 +18,10 @@ export function getQueryDate(date) {
 export function getChartsLabels(startDate, diff) {
   var filteredList = [];
   const start = startDate;
+  var futureMonth = moment(start).add(0, 'M');
   for (let index = 0; index <= diff; index++) {
-    filteredList.push(moment(start).format('YYYY.MM'));
-    var futureMonth = moment(start).add((index + 1), 'M');
+    filteredList.push(moment(futureMonth).format('YYYY.MM'));
+    futureMonth = moment(start).add((index + 1), 'M');
   }
 
   console.log(filteredList)
@@ -37,6 +38,25 @@ export function monthDiff(d1, d2) {
   return months <= 0 ? 0 : months;
 }
 
+//visszaadja a labeleket a chartsnak
+export function getChartsData(data, labels) {
+
+  const sumDays = [];
+  for (let x = 0; x < labels.length; x++) {
+    let num = 0;
+
+    data.map((item) => {
+      if (labels[x] === item.date) {
+        num++;
+      }
+    })
+
+    sumDays.push(num);
+    num = 0;
+  }
+
+  return sumDays;
+}
 
 export function activitySelector(query) {
   const result = [];
@@ -68,4 +88,13 @@ export function activitySelector(query) {
   }
 
   return result;
+}
+
+//random rgb generator
+export function getRandomRgb() {
+  var num = Math.round(0xffffff * Math.random());
+  var r = num >> 16;
+  var g = num >> 8 & 255;
+  var b = num & 255;
+  return 'rgb(' + r + ', ' + g + ', ' + b + ')';
 }
