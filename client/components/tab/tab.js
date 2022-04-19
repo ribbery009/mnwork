@@ -5,18 +5,46 @@ import Box from '@mui/material/Box';
 import { useEffect } from 'react';
 import ChartComponent from '../chart/doughnut';
 import { monthDiff, getChartsLabels, getChartsData, getRandomRgb } from '../../helpers/functions';
-
+import _ from 'lodash';
 export default function TabComponent({ data, columns, paginationProp, startDate, endDate, list, name, status }) {
 
     const [value, setValue] = React.useState(0);
+    const [chartComponent, setChartComponent] = React.useState(null);
     const [navigator, setTabNavigator] = React.useState(0);
 
     useEffect(() => {
 
 
+        //labels
+        const chartLabels = getChartsLabels(startDate, diff);
 
+        let monthData;
+        let rgbArray = [];
+        if (!_.isNull(list)) {
+            console.log("List: ",list)
+console.log(status)
+            if(status === "mindegyik"){
+
+            }else{
+                monthData = getChartsData(list, chartLabels);
+            }
+
+            for (let index = 0; index < chartLabels.length; index++) {
+                const element = getRandomRgb();
+                rgbArray.push(element)
+            }
+
+
+        }
+        setChartComponent(<ChartComponent dataList={monthData} labels={chartLabels} colors={rgbArray} />)
 
     }, [list])
+
+    
+    useEffect(() => {
+
+console.log("status: ",status)
+    }, [status])
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -37,22 +65,7 @@ export default function TabComponent({ data, columns, paginationProp, startDate,
     //2 dátum különbsége
     const diff = monthDiff(startDate, endDate);
 
-    //labels
-    const chartLabels = getChartsLabels(startDate, diff);
-
-    let monthData;
-    let rgbArray =[];
-    if (list) {
-        monthData = getChartsData(list, chartLabels);
-        console.log(monthData)
-        
-        for (let index = 0; index < chartLabels.length; index++) {
-            const element = getRandomRgb();
-            rgbArray.push(element)
-        }
-    }
-
-    console.log("colrs", rgbArray)
+    console.log(chartComponent)
     return (
         <>
 
@@ -73,7 +86,7 @@ export default function TabComponent({ data, columns, paginationProp, startDate,
                     {allName && <Tab label="Összes" />}
                 </Tabs>
             </Box>
-            {<ChartComponent dataList={monthData} labels={chartLabels} colors={rgbArray} />}
+            {!(_.isNull(chartComponent)) && chartComponent}
         </>
     );
 };

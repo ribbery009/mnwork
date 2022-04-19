@@ -14,12 +14,12 @@ import TabComponent from '../../components/tab/tab'
 import CustomClipLoader from "../../components/loader";
 import Button from '../../components/button';
 import ErrorMessage from '../../components/error/template';
-
+import _ from 'lodash';
 registerLocale("hu", hu);
 
 export default ({ currentUser }) => {
 
-  const [list, setList] = useState("")
+  const [list, setList] = useState(null)
   const [table, setTable] = useState(null)
   const [tabComponent, setTabsComponent] = useState(null)
 
@@ -131,11 +131,15 @@ export default ({ currentUser }) => {
 
 
   useEffect(() => {
-    if (list && list !== "") {
+    if (!(_.isNull(list))) {
       setTable(<Table data={list} columns={timeTableColumnsGenerator(handChangeRowID)} />)
-      setTabsComponent(<TabComponent list={list} startDate={startDate} endDate={endDate} name={defaultSelectTextName}/>)
+      setTabsComponent(<TabComponent list={list} startDate={startDate} endDate={endDate} name={defaultSelectTextName} status={defaultSelectTextState}/>)
     }
   }, [list])
+
+  useEffect(() => {
+console.log(defaultSelectTextState)
+  }, [defaultSelectTextState])
 
 
   useEffect(() => {
@@ -184,7 +188,7 @@ export default ({ currentUser }) => {
               </form>
 
               <div className="charts-wrapper">
-                <TabComponent list={list} startDate={startDate} endDate={endDate} name={defaultSelectTextName} status={defaultSelectTextState}/>
+                {!(_.isNull(list)) && <TabComponent list={list} startDate={startDate} endDate={endDate} name={defaultSelectTextName} status={defaultSelectTextState}/>}
               </div>
             </div>
           </div>

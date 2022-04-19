@@ -3,6 +3,7 @@ export function timeTableColumnsGenerator(handleDelete){
         {
           name: 'Név',
           selector: row => row.name,
+          sortable: true
         },
         {
           name: 'Kezdés',
@@ -15,10 +16,12 @@ export function timeTableColumnsGenerator(handleDelete){
         {
           name: 'Státusz',
           selector: row => row.status,
+          sortable: true
         },
         {
           name: 'Dátum',
           selector: row => row.date,
+          sortable: true
         },
         {
           name: ' ',
