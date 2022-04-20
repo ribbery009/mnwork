@@ -1,7 +1,7 @@
-const ButtonField = ({ text,classes,clickFunction }) => {
+const ButtonField = ({ text,classes,clickFunction,id,type }) => {
 
     return (
-       <button className={classes} onClick={clickFunction}>{text}</button>
+       <button type={type && type} id={id} className={classes} onClick={clickFunction}>{text}</button>
     );
 };
 

@@ -42,7 +42,7 @@ const CustomSelect = ({ optionsList, setDefaultSelectText, defaultSelectText, ti
     }
     setShowOptionList(false)
   };
-  console.log(optionsList)
+ 
   return (
     <div className="custom-select-container">
       <label>{title}</label>

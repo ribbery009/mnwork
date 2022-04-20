@@ -8,10 +8,8 @@ export default ({ url, method, body, onSuccess }) => {
     try {
       setErrors(null);
       const response = await axios[method](url, body);
-      console.log("response: ",response)
       if (onSuccess) {
         if(response.data){
-          console.log("response2: ",response)
           onSuccess(response.data);
         }
         else{

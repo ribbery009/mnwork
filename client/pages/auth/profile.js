@@ -3,6 +3,12 @@ import useRequest from '../../hooks/use-request';
 import InputField from '../../components/inputField';
 import Button from '../../components/button';
 import Router from 'next/router';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+
+import PublicEditor from '../../components/profil/public';
+import PrivateEditor from '../../components/profil/private'
 
 export default ({ currentUser }) => {
   const [email, setEmail] = useState('');
@@ -15,15 +21,18 @@ export default ({ currentUser }) => {
   const [postcode, setPostCode] = useState('');
   const [job_title, setJobTitle] = useState('');
 
+  const [isLoading, setLoading] = useState(false);
+  const [deleteValue, setDeleteValue] = useState(false);
+  const [data, setData] = useState("false");
+  const [init, setInit] = useState(true);
 
-  const [isLoading, setLoading] = useState(false)
-  const [data, setData] = useState("false")
 
+  const [value, setValue] = useState(0);
 
   const { doRequest, errors } = useRequest({
-    url: '/api/users/useredit',
+    url: deleteValue ? '/api/users/delete' : '/api/users/useredit',
     method: 'post',
-    body: {
+    body: deleteValue ? (currentUser.id) : {
       email,
       password,
       name,
@@ -37,6 +46,10 @@ export default ({ currentUser }) => {
     onSuccess: () => Router.push('/')
   });
 
+  const handleChange = (event, newValue) => {
+    console.log("newValue", newValue)
+    setValue(newValue);
+  };
 
   useEffect(() => {
     setLoading(true)
@@ -55,59 +68,51 @@ export default ({ currentUser }) => {
           setJobTitle(data.job_title)
           setRule(data.rule)
           setLoading(false)
+          setInit(false)
           return data
         }
 
       })
   }, [])
 
+  useEffect(async () => {
+    if (!init) {
+      await doRequest();
+    }
+  }, [deleteValue])
+
 
   const onSubmit = async event => {
     event.preventDefault();
-
-    await doRequest();
+    console.log(event)
+    setDeleteValue(false);
   };
+
+  const clickMethod = e => {
+    setDeleteValue(true);
+  }
 
   return (
     <div className='container'>
       <div className='row'>
         <div className='col-wrapper col'>
           <div className='authWrapper'>
-            <form onSubmit={onSubmit}>
-              <h3 className='form-title'>Fiók</h3>
-              <div className="form-group">
-                <InputField label="E-mail" value={email} onChange={e => setEmail(e.target.value)} classes="form-control" />
-              </div>
-              <div className="form-group">
-                <InputField label="Név" value={name} onChange={e => setName(e.target.value)} classes="form-control" />
-              </div>
-              <div className="form-group">
-                <InputField label="Város" value={city} onChange={e => setCity(e.target.value)} classes="form-control" />
-              </div>
-              <div className="form-group">
-                <InputField label="Irányítószám" value={postcode} onChange={e => setPostCode(e.target.value)} classes="form-control" />
-              </div>
-              <div className="form-group">
-                <InputField label="Cím" value={address} onChange={e => setAddress(e.target.value)} classes="form-control" />
-              </div>
-              <div className="form-group">
-                <InputField label="Szerepkör" value={rule} onChange={e => setRule(e.target.value)} classes="form-control" />
-              </div>
-              <div className="form-group">
-                <InputField label="Telefon" value={phone} onChange={e => setPhone(e.target.value)} classes="form-control teszt" />
-              </div>
-              <div className="form-group">
-                <InputField label="Munkakör" value={job_title} onChange={e => setJobTitle(e.target.value)} classes="form-control" />
-              </div>
-              <div className="form-group">
-                <InputField label="Jelszó" value={password} onChange={e => setPassword(e.target.value)} classes="form-control" />
-              </div>
-              {errors}
-              <div className='button-wrapper'>
-                <Button classes="noselect" text={"Mentés"}></Button>
-              </div>
 
-            </form>
+            <Box sx={{ maxWidth: { xs: 320, sm: 480 }, bgcolor: 'background.paper' }}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                variant="scrollable"
+                scrollButtons="auto"
+                aria-label="scrollable auto tabs example"
+              >
+
+                <Tab label="Saját profil" />
+                <Tab label="Munkatársak" />
+
+              </Tabs>
+            </Box>
+            {value == 0 ? <PublicEditor currentUser={currentUser} /> : <PrivateEditor />}
 
 
 

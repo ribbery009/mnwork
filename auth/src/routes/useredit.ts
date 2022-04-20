@@ -18,9 +18,9 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { email, password,name,rule,job_title,phone,city,address,postcode } = req.body;
+    const { email, password,name,rule,job_title,phone,city,address,postcode,id } = req.body;
 
-    let existingUser = await User.findOne({ email });
+    let existingUser = await User.findOne({ "_id" : id });
 
     if (!existingUser) {
       throw new BadRequestError('Nem találom a felhasználót!');

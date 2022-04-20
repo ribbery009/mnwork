@@ -6,24 +6,15 @@ const router = express.Router();
 router.get('/api/users/getusers', async (req, res) => {
     const users = await User.find();
     let usersList = users.map((user) => {
-
-        let newUser = null;
-        if (user) {
-            newUser = {
-                name: user.name,
-                job_title: user.job_title,
-                email: user.email
-            }
-        }
-        return newUser  
+        return user;
     })
 
-    
-    if(!usersList){
+
+    if (!usersList) {
         res.send({});
     }
     res.send(usersList)
-    })
+})
 
 // res.send(usersList ? (usersList) : ({}))
 

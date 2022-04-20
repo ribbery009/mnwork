@@ -42,9 +42,6 @@ export default () => {
               </div>
               
             </form>
-
-
-
           </div>
         </div>
       </div>

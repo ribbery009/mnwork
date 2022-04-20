@@ -10,6 +10,7 @@ import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
 import { getUsers } from './routes/get-users';
 import { getUser } from './routes/get-user';
+import { deleteUser } from './routes/delete';
 import { userEditRouter } from './routes/useredit';
 import { errorHandler,NotFoundError } from '@mnwork/common';
 
@@ -30,6 +31,7 @@ app.use(signupRouter);
 app.use(getUsers);
 app.use(getUser);
 app.use(userEditRouter);
+app.use(deleteUser);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();
