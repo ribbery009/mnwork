@@ -10,7 +10,7 @@ router.get('/api/time/get-time', async (req, res) => {
   const timeList = await Time.find();
   let usersList = {};
   let newRow = {};
-  var respList = [] as any
+  var respList = new Array();
 
   console.log("resplist: ", respList)
   console.log("req query: ", req.query)
@@ -68,10 +68,8 @@ router.get('/api/time/get-time', async (req, res) => {
 
   }
 
-  console.log("respList: ", respList)
-
   // res.send(usersList ? (usersList) : ({}))
-  if (!respList || respList === null) {
+  if (!respList || respList === null || respList.length == 0) {
     res.send("no data");
   } else {
     res.status(201).send(respList)

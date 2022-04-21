@@ -106,10 +106,8 @@ export default ({ currentUser }) => {
                 scrollButtons="auto"
                 aria-label="scrollable auto tabs example"
               >
-
                 <Tab label="Saját profil" />
                 <Tab label="Munkatársak" />
-
               </Tabs>
             </Box>
             {value == 0 ? <PublicEditor currentUser={currentUser} /> : <PrivateEditor />}

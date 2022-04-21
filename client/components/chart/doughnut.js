@@ -62,13 +62,16 @@ export default function ChartComponent({ dataList,name,status,labels,colors }) {
     
 console.log("colors: ",colors)
 
+console.log("colors: ",dataList)
+
+
     const data = {
         backgroundColor: colors.map((color) => {return color}),
         labels: labels.map((month) => {return month}),
         datasets: [
             {
                 label: status,
-                data: dataList.map(num => {return num}),
+                data: dataList && dataList.map(num => {return num}),
                 backgroundColor: colors.map((color) => {return color}),
                 hoverOffset: 4,
             }

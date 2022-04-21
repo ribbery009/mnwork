@@ -29,6 +29,15 @@ export function getChartsLabels(startDate, diff) {
   return filteredList;
 }
 
+//legenerálja a neveket és e-maileket tartalmazó struktúrát a customSelect komponensnek
+export function getNamesAndEmails(data) {
+  const newList = { email: "all", job_title: "all", name: "Mindenki" }
+  const newArray = [newList].concat(data)
+
+  console.log(newArray)
+  return newArray
+}
+
 //kiszámolja 2 dátum különbségét hónapokban
 export function monthDiff(d1, d2) {
   var months;
@@ -40,7 +49,8 @@ export function monthDiff(d1, d2) {
 
 //visszaadja a labeleket a chartsnak
 export function getChartsData(data, labels) {
-
+  console.log("data: ", data)
+  console.log("labels: ", labels)
   const sumDays = [];
   for (let x = 0; x < labels.length; x++) {
     let num = 0;

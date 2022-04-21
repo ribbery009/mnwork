@@ -45,7 +45,7 @@ const CustomSelect = ({ optionsList, setDefaultSelectText, defaultSelectText, ti
  
   return (
     <div className="custom-select-container">
-      <label>{title}</label>
+      {title && <label>{title}</label>}
       <div
         className={showOptionList === true ? "selected-text active" : "selected-text"}
         onClick={handleListDisplay}

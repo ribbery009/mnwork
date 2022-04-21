@@ -1,8 +1,12 @@
+import axios from "axios";
 export async function FetchData(url) {
-    let dataResponse = await fetch(url, { headers: { "Content-type": "application/json;charset=utf-8" } })
-    if (!dataResponse.ok) {
-        throw new Error(`Error status: ${dataResponse.status}`);
-    }
-    const timeTableList = await dataResponse.json();
-    return timeTableList
+
+    try {
+        const response = await axios.get(url);
+    
+        return response.data;
+      } catch (err) {
+        console.log(err);
+      }
+   
 }

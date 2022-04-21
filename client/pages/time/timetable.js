@@ -2,7 +2,7 @@ import Router from 'next/router'
 import { useState, useEffect } from "react";
 import Table from '../../components/table/index';
 import CustomSelect from "../../components/customSelect";
-import { getQueryDate, activitySelector,getChartsData } from "../../helpers/functions";
+import { getQueryDate, activitySelector, getChartsData, getNamesAndEmails } from "../../helpers/functions";
 import { AiFillDelete } from "react-icons/ai";
 import useRequest from "../../hooks/use-request";
 import DatePicker, { registerLocale } from 'react-datepicker';
@@ -14,8 +14,8 @@ import TabComponent from '../../components/tab/tab'
 import CustomClipLoader from "../../components/loader";
 import Button from '../../components/button';
 import ErrorMessage from '../../components/error/template';
-
-
+import useFetch from "../../hooks/use-fetch";
+import axios from 'axios';
 import _ from 'lodash';
 registerLocale("hu", hu);
 
@@ -33,14 +33,16 @@ export default ({ currentUser }) => {
 
   const [defaultSelectEmail, setDefaultSelectEmail] = useState("");
 
-  const [optionsList, setOptionList] = useState([{ name: "mindegyik" }, { name: "munka" }, { name: "szabad" }, { name: "beteg" },{ name: "itt van" }, { name: "zárva az étterem" }, { name: "nyaralás" }, { name: "késés" }])
+  const [optionsList, setOptionList] = useState([{ name: "mindegyik" }, { name: "munka" }, { name: "szabad" }, { name: "beteg" }, { name: "itt van" }, { name: "zárva az étterem" }, { name: "nyaralás" }, { name: "késés" }])
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date(new Date().setDate(startDate.getDate() + 1)));
 
   const [data, setData] = useState(null)
   const [errorMessageTemplate, setErrorMessageTemplate] = useState(null)
 
-  const [reqPending, setReqPending] = useState(false);
+
+
+  const [users] = useFetch("/api/users/getusers");
 
   const { doRequest, errors } = useRequest({
     url: '/api/time/delete',
@@ -58,15 +60,15 @@ export default ({ currentUser }) => {
 
     if (defaultSelectTextState !== "Válasszon a listából") {
       const activity = activitySelector(defaultSelectTextState)
-
-      let newData = [];
       const queryStartDate = getQueryDate(startDate);
       const queryEndDate = getQueryDate(endDate);
-      let data;
+
       try {
+
         const url = `/api/time/get-time?activity=${activity}&startDate=${queryStartDate}&endDate=${queryEndDate}&email=${defaultSelectEmail}`;
-        data = await FetchData(url);
-        if (data && data !== "no data!" && data.length > 0) {
+        const data = await FetchData(url);
+
+        if (data && data !== "no data" && data.length > 0) {
 
           let filteredList;
           if (defaultSelectTextState === "mindegyik") {
@@ -77,9 +79,11 @@ export default ({ currentUser }) => {
           setList(filteredList)
 
         } else {
-          setList("")
+          setList(null)
         }
+
       } catch (error) {
+        console.log(error)
         setErrorMessageTemplate(<ErrorMessage message={error}></ErrorMessage>)
       }
 
@@ -89,10 +93,10 @@ export default ({ currentUser }) => {
     setLoading(false)
   }
 
-  const onSubmit = async event => {
+  const onSubmit = event => {
     event.preventDefault();
 
-    await sendRequest();
+    sendRequest();
   };
 
   const handChangeRowID = (row, e) => {
@@ -110,39 +114,25 @@ export default ({ currentUser }) => {
   }
 
   useEffect(() => {
-    setLoading(true)
-    fetch(`/api/users/getusers`)
-      .then((res) => res.json())
-      .then((data) => {
 
-        if (data) {
+    if (users) {
+      const filteredList = getNamesAndEmails(users);
+      setData(filteredList)
+    }
 
-          const newList = { email: "all", job_title: "all", name: "Mindenki" }
-
-          const newArray = [newList].concat(data)
-          data.concat(newArray)
-          console.log("newArray: ", newArray)
-          console.log("data: ", data)
-          setData(newArray)
-          setLoading(false)
-          return data
-        }
-
-      })
-  }, [])
+  }, [users])
 
 
   useEffect(() => {
     if (!(_.isNull(list))) {
+      console.log("list: ", list)
       setTable(<Table data={list} columns={timeTableColumnsGenerator(handChangeRowID)} />)
-      setTabsComponent(<TabComponent list={list} startDate={startDate} endDate={endDate} name={defaultSelectTextName} status={defaultSelectTextState}/>)
+      setTabsComponent(<TabComponent list={list} startDate={startDate} endDate={endDate} name={defaultSelectTextName} status={defaultSelectTextState} />)
+    } else {
+      setTable(null)
+      setTabsComponent(null)
     }
   }, [list])
-
-  useEffect(() => {
-console.log(defaultSelectTextState)
-  }, [defaultSelectTextState])
-
 
   useEffect(() => {
     if (rowId !== "") {
@@ -159,7 +149,7 @@ console.log(defaultSelectTextState)
           <div className='authWrapper timetable'>
             <div className='timeTable-wrapper'>
               <form onSubmit={onSubmit}>
-                <h3 className='form-title'>Napi Beosztás</h3>
+                <h3 className='form-title'>Beosztás</h3>
                 <div className="calendar-wrapper">
                   <div className="start-time">
                     <label>Kezdés</label>
@@ -190,7 +180,7 @@ console.log(defaultSelectTextState)
               </form>
 
               <div className="charts-wrapper">
-                {!(_.isNull(list)) && <TabComponent list={list} startDate={startDate} endDate={endDate} name={defaultSelectTextName} status={defaultSelectTextState}/>}
+                {!(_.isNull(list)) && <TabComponent list={list} startDate={startDate} endDate={endDate} name={defaultSelectTextName} status={defaultSelectTextState} />}
               </div>
             </div>
           </div>

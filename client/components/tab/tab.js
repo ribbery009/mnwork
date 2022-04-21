@@ -18,6 +18,7 @@ export default function TabComponent({ data, columns, paginationProp, startDate,
         //labels
         const chartLabels = getChartsLabels(startDate, diff);
 
+        console.log("chartLabels: ",chartLabels)
         let monthData;
         let rgbArray = [];
         if (!_.isNull(list)) {
@@ -36,6 +37,7 @@ console.log(status)
 
 
         }
+        console.log("dataList: ",monthData);
         setChartComponent(<ChartComponent dataList={monthData} labels={chartLabels} colors={rgbArray} />)
 
     }, [list])
