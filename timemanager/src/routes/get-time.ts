@@ -32,7 +32,7 @@ router.get('/api/time/get-time', async (req, res) => {
           respList.push(time);
         }
         //összes
-        else if (queryStart <= timeStart && queryEnd >= timeEnd) {
+        else if (queryStart <= timeStart && queryEnd >= timeEnd ) {
           newRow = time;
           respList.push(time);
         }
@@ -51,12 +51,13 @@ router.get('/api/time/get-time', async (req, res) => {
 
           respList.push(time);
         }
-        //összes
-        else if (queryStart <= timeStart && queryEnd >= timeEnd && activity === "mindegyik" && time.user_email === email) {
-          newRow = time;
-          respList.push(time);
-        }
-        else if (queryStart <= timeStart && queryEnd >= timeEnd && time.status === activity && time.user_email === email) {
+        // //összes
+        // else if (queryStart <= timeStart && queryEnd >= timeEnd && activity === "mindegyik" && time.user_email === email) {
+        //   newRow = time;
+        //   respList.push(time);
+        // }
+        else if (queryStart <= timeStart && queryEnd >= timeEnd && time.late == true && time.user_email === email && activity==="késés") {
+          console.log("késés")
           newRow = time;
           respList.push(time);
         }

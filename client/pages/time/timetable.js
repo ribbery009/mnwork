@@ -14,10 +14,19 @@ import TabComponent from '../../components/tab/tab'
 import CustomClipLoader from "../../components/loader";
 import Button from '../../components/button';
 import ErrorMessage from '../../components/error/template';
+import ClipLoader from "react-spinners/ClipLoader";
+import { css } from "@emotion/react";
 import useFetch from "../../hooks/use-fetch";
-import axios from 'axios';
+import NoData from "../../components/svg/no-data"
 import _ from 'lodash';
 registerLocale("hu", hu);
+
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 export default ({ currentUser }) => {
 
@@ -33,14 +42,14 @@ export default ({ currentUser }) => {
 
   const [defaultSelectEmail, setDefaultSelectEmail] = useState("");
 
-  const [optionsList, setOptionList] = useState([{ name: "mindegyik" }, { name: "munka" }, { name: "szabad" }, { name: "beteg" }, { name: "itt van" }, { name: "zárva az étterem" }, { name: "nyaralás" }, { name: "késés" }])
+  const [optionsList, setOptionList] = useState([ { name: "munka" }, { name: "szabad" }, { name: "beteg" }, { name: "itt van" }, { name: "zárva az étterem" }, { name: "nyaralás" }, { name: "késés" }])
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date(new Date().setDate(startDate.getDate() + 1)));
 
   const [data, setData] = useState(null)
   const [errorMessageTemplate, setErrorMessageTemplate] = useState(null)
 
-
+  let [color, setColor] = useState("#ffffff");
 
   const [users] = useFetch("/api/users/getusers");
 
@@ -66,20 +75,21 @@ export default ({ currentUser }) => {
       try {
 
         const url = `/api/time/get-time?activity=${activity}&startDate=${queryStartDate}&endDate=${queryEndDate}&email=${defaultSelectEmail}`;
+        setList(null)
         const data = await FetchData(url);
 
         if (data && data !== "no data" && data.length > 0) {
 
           let filteredList;
-          if (defaultSelectTextState === "mindegyik") {
-            filteredList = dataWrapper(data, <AiFillDelete />);
+          if (defaultSelectTextState === "késés") {
+            filteredList = dataWrapper(data.filter((item) => item.late == true), <AiFillDelete />);
           } else {
             filteredList = dataWrapper(data.filter((item) => item.status === defaultSelectTextState), <AiFillDelete />);
           }
           setList(filteredList)
 
         } else {
-          setList(null)
+          setList('no data')
         }
 
       } catch (error) {
@@ -124,11 +134,15 @@ export default ({ currentUser }) => {
 
 
   useEffect(() => {
-    if (!(_.isNull(list))) {
+    if (!(_.isNull(list)) && list !== "no data") {
       console.log("list: ", list)
       setTable(<Table data={list} columns={timeTableColumnsGenerator(handChangeRowID)} />)
       setTabsComponent(<TabComponent list={list} startDate={startDate} endDate={endDate} name={defaultSelectTextName} status={defaultSelectTextState} />)
-    } else {
+    }
+    else if (list !== "no data") {
+
+    }
+    else {
       setTable(null)
       setTabsComponent(null)
     }
@@ -140,12 +154,11 @@ export default ({ currentUser }) => {
     }
   }, [rowId])
 
-
+console.log("activity: ",defaultSelectTextState)
   return (
     <div className="page">
       {currentUser ? (
         <>
-          <CustomClipLoader loading={isLoading}></CustomClipLoader>
           <div className='authWrapper timetable'>
             <div className='timeTable-wrapper'>
               <form onSubmit={onSubmit}>
@@ -180,7 +193,16 @@ export default ({ currentUser }) => {
               </form>
 
               <div className="charts-wrapper">
-                {!(_.isNull(list)) && <TabComponent list={list} startDate={startDate} endDate={endDate} name={defaultSelectTextName} status={defaultSelectTextState} />}
+                {(!(_.isNull(list)) && list !== "no data") && <TabComponent list={list} startDate={startDate} endDate={endDate} name={defaultSelectTextName} status={defaultSelectTextState} />}
+                {(_.isNull(list)) && <h3>Kérem válassza ki a szükséges paramétereket.</h3>}
+                <ClipLoader color={color} loading={isLoading} css={override} size={150} />
+                {(list === "no data") &&
+                  <>
+                    <h3>Nincs visszatérő adat!</h3>
+                    <NoData />
+                  </>
+                }
+
               </div>
             </div>
           </div>

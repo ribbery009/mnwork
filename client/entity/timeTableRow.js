@@ -1,4 +1,4 @@
-export const timeTableRow = (index, userId, userName, startT, endT, userStatus, icon, userUser_email,date) => {
+export const timeTableRow = (index, userId, userName, startT, endT, userStatus, icon, userUser_email,date,month,liveStart,liveEnd,late) => {
     return {
         id: index,
         timeId: userId,
@@ -8,6 +8,10 @@ export const timeTableRow = (index, userId, userName, startT, endT, userStatus, 
         status: userStatus,
         delete: icon,
         email: userUser_email,
-        date: date
+        date: date,
+        month: month,
+        liveS: liveStart,
+        liveE: liveEnd,
+        late:late
     }
 }

@@ -10,6 +10,7 @@ import {close} from './routes/close';
 import { deleteTime } from './routes/deletetime';
 import { errorHandler,NotFoundError } from '@mnwork/common';
 import { getTime } from './routes/get-time';
+import { getActiveMembers } from './routes/activemembers';
 
 const app = express();
 app.set('trust proxy', true);
@@ -25,6 +26,7 @@ app.use(newtime);
 app.use(isHere);
 app.use(close);
 app.use(getTime);
+app.use(getActiveMembers);
 app.use(deleteTime);
 
 app.all('*', async (req, res) => {

@@ -17,14 +17,24 @@
 
     .timeTable-wrapper {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
 
       @media screen and (max-width: 1024px) {
         flex-direction: column;
       }
 
       .charts-wrapper {
+       
+        padding:40px;
         min-width: 100%;
+
+        svg{
+          width:100%;
+        }
+
+        h3{
+          text-align: center;
+        }
       }
     }
 
@@ -34,6 +44,10 @@
     .calendar-wrapper {
       display: flex;
       margin-bottom: 30px;
+
+      @media only screen and (max-width: 400px) {
+      flex-direction: column;
+      }
     }
 
     .delete-button {

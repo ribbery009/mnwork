@@ -70,24 +70,6 @@ console.log("status: ",status)
     console.log(chartComponent)
     return (
         <>
-
-            <Box sx={{ maxWidth: { xs: 320, sm: 480 }, bgcolor: 'background.paper' }}>
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    variant="scrollable"
-                    scrollButtons="auto"
-                    aria-label="scrollable auto tabs example"
-                >
-                    {(isMonthDiff & status == "késés") && <Tab label="Késés" />}
-                    {isTodayProp & (status == "Itt van") && <Tab label="Itt van" />}
-                    {isMonthDiff & (status == "beteg") && <Tab label="Betegség" />}
-                    {isMonthDiff & (status == "szabad") && <Tab label="Szabadság" />}
-                    {isMonthDiff & (status == "munka") && <Tab label="Munka" />}
-                    {isMonthDiff & (status == "zárva az étterem") && <Tab label="Munka" />}
-                    {allName && <Tab label="Összes" />}
-                </Tabs>
-            </Box>
             {!(_.isNull(chartComponent)) && chartComponent}
         </>
     );

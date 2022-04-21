@@ -29,6 +29,19 @@ export function getChartsLabels(startDate, diff) {
   return filteredList;
 }
 
+//visszaadja a labeleket a chartsnak nevek alapján
+export function getChartsLabelsByNames(list) {
+  var filteredList = [];
+console.log("list: ",list)
+ list.map((item) =>{
+  filteredList.push(item.name)
+ })
+
+ console.log("filteredList: ",filteredList)
+  return filteredList;
+}
+
+
 //legenerálja a neveket és e-maileket tartalmazó struktúrát a customSelect komponensnek
 export function getNamesAndEmails(data) {
   const newList = { email: "all", job_title: "all", name: "Mindenki" }
@@ -56,7 +69,27 @@ export function getChartsData(data, labels) {
     let num = 0;
 
     data.map((item) => {
-      if (labels[x] === item.date) {
+      if (labels[x] === item.month) {
+        num++;
+      }
+    })
+
+    sumDays.push(num);
+    num = 0;
+  }
+
+  return sumDays;
+}
+
+//visszaadja a labeleket a chartsnak
+export function getChartsDataByNames(data, labels) {
+
+  const sumDays = [];
+  for (let x = 0; x < labels.length; x++) {
+    let num = 0;
+
+    data.map((item) => {
+      if (labels[x] === item.month) {
         num++;
       }
     })
@@ -92,7 +125,9 @@ export function activitySelector(query) {
     case "nyaralás":
       result.push(query)
       break;
-
+      case "késés":
+        result.push(query)
+        break;
     default:
       break;
   }
