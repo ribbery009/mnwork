@@ -6,8 +6,7 @@ import Router from 'next/router';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-
-
+import axios from 'axios';
 export default ({ currentUser }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -22,6 +21,9 @@ export default ({ currentUser }) => {
 
     const [data, setData] = useState(null)
     const [init, setInit] = useState(false)
+    const [isEmployer, setEmployer] = useState((currentUser.job === "alkalmazott") && true)
+
+
     const { doRequest, errors } = useRequest({
         url: '/api/users/useredit',
         method: 'post',
@@ -40,27 +42,29 @@ export default ({ currentUser }) => {
         onSuccess: () => Router.push('/')
     });
 
-    useEffect(() => {
+    useEffect(async () => {
+        try {
+            const response = await axios.get(`/api/users/getuser?_id=${currentUser.id}`);
+        
+            if (response.data) {
+                setData(response.data)
+                setEmail(response.data.email)
+                setName(response.data.name)
+                setPhone(response.data.phone)
+                setCity(response.data.city)
+                setAddress(response.data.address)
+                setPostCode(response.data.postcode)
+                setJobTitle(response.data.job_title)
+                setRule(response.data.rule)
+                setId(response.data.id)
+                setInit(false)
+                return data
+            }
+          } catch (err) {
+            console.log(err);
+          }
 
-        fetch(`/api/users/getuser?_id=${currentUser.id}`)
-            .then((res) => res.json())
-            .then((data) => {
-                if (data) {
-                    setData(data)
-                    setEmail(data.email)
-                    setName(data.name)
-                    setPhone(data.phone)
-                    setCity(data.city)
-                    setAddress(data.address)
-                    setPostCode(data.postcode)
-                    setJobTitle(data.job_title)
-                    setRule(data.rule)
-                    setId(data.id)
-                    setInit(false)
-                    return data
-                }
-
-            })
+       
     }, [])
 
 
@@ -73,36 +77,36 @@ export default ({ currentUser }) => {
         <form onSubmit={onSubmit}>
             <h3 className='form-title'>Fiók</h3>
             <div className="form-group">
-                <InputField label="E-mail" value={email} onChange={e => setEmail(e.target.value)} classes="form-control" />
+                <InputField label="E-mail" value={email} onChange={e => setEmail(e.target.value)} classes="form-control" read={isEmployer}/>
             </div>
             <div className="form-group">
-                <InputField label="Név" value={name} onChange={e => setName(e.target.value)} classes="form-control" />
+                <InputField label="Név" value={name} onChange={e => setName(e.target.value)} classes="form-control" read={isEmployer}/>
             </div>
             <div className="form-group">
-                <InputField label="Város" value={city} onChange={e => setCity(e.target.value)} classes="form-control" />
+                <InputField label="Város" value={city} onChange={e => setCity(e.target.value)} classes="form-control" read={isEmployer}/>
             </div>
             <div className="form-group">
-                <InputField label="Irányítószám" value={postcode} onChange={e => setPostCode(e.target.value)} classes="form-control" />
+                <InputField label="Irányítószám" value={postcode} onChange={e => setPostCode(e.target.value)} classes="form-control" read={isEmployer}/>
             </div>
             <div className="form-group">
-                <InputField label="Cím" value={address} onChange={e => setAddress(e.target.value)} classes="form-control" />
+                <InputField label="Cím" value={address} onChange={e => setAddress(e.target.value)} classes="form-control" read={isEmployer}/>
             </div>
             <div className="form-group">
-                <InputField label="Szerepkör" value={rule} onChange={e => setRule(e.target.value)} classes="form-control" />
+                <InputField label="Szerepkör" value={rule} onChange={e => setRule(e.target.value)} classes="form-control" read={isEmployer}/>
             </div>
             <div className="form-group">
-                <InputField label="Telefon" value={phone} onChange={e => setPhone(e.target.value)} classes="form-control teszt" />
+                <InputField label="Telefon" value={phone} onChange={e => setPhone(e.target.value)} classes="form-control teszt" read={isEmployer}/>
             </div>
+            {((currentUser) && (currentUser.job === "manager" || currentUser.job === "tulajdonos")) && <div className="form-group">
+                <InputField label="Munkakör" value={job_title} onChange={e => setJobTitle(e.target.value)} classes="form-control" read={isEmployer}/>
+            </div>}
             <div className="form-group">
-                <InputField label="Munkakör" value={job_title} onChange={e => setJobTitle(e.target.value)} classes="form-control" />
-            </div>
-            <div className="form-group">
-                <InputField label="Jelszó" value={password} onChange={e => setPassword(e.target.value)} classes="form-control" />
+                <InputField label="Jelszó" value={password} onChange={e => setPassword(e.target.value)} classes="form-control" read={isEmployer}/>
             </div>
             {errors}
             <div className='button-container'>
                 <div className='button-wrapper'>
-                    <Button classes="noselect" text={"Mentés"}></Button>
+                    <Button classes="noselect" text={"Módosít"}></Button>
                 </div>
             </div>
 

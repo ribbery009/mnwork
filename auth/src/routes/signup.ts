@@ -10,11 +10,11 @@ const router = express.Router();
 router.post(
   '/api/users/signup',
   [
-    body('email').isEmail().withMessage('Email must be valid'),
+    body('email').isEmail().withMessage('Nem valid e-mail cím'),
     body('password')
       .trim()
       .isLength({ min: 4, max: 20 })
-      .withMessage('Password must be between 4 and 20 characters'),
+      .withMessage('A jelszó 4 és 20 karakter között a megfelelő'),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
@@ -23,27 +23,11 @@ router.post(
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      throw new BadRequestError('Email in use');
+      throw new BadRequestError('Az e-mail használatban van már');
     }
 
     const user = User.build({email, password,name,rule,job_title,phone,city,address,postcode});
     await user.save();
-
-    // Generate JWT
-    const userJwt = jwt.sign(
-      {
-        id: user.id,
-        email: user.email,
-      },
-      process.env.JWT_KEY!
-    );
-
- 
-    // Store it on session object
-    req.session = {
-      jwt: userJwt,
-    };
-  
 
     res.status(201).send(user);
   }

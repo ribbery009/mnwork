@@ -1,7 +1,4 @@
 import * as React from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
 import { useEffect } from 'react';
 import ChartComponent from '../chart/doughnut';
 import { monthDiff, getChartsLabels, getChartsData, getRandomRgb } from '../../helpers/functions';

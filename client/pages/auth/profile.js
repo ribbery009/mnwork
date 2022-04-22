@@ -9,6 +9,9 @@ import Box from '@mui/material/Box';
 
 import PublicEditor from '../../components/profil/public';
 import PrivateEditor from '../../components/profil/private'
+import NewMember from '../../components/profil/newMember';
+import axios from 'axios';
+
 
 export default ({ currentUser }) => {
   const [email, setEmail] = useState('');
@@ -51,28 +54,29 @@ export default ({ currentUser }) => {
     setValue(newValue);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     setLoading(true)
-    fetch(`/api/users/getuser?_id=${currentUser.id}`)
-      .then((res) => res.json())
-      .then((data) => {
-
-        if (data) {
-          setData(data)
-          setEmail(data.email)
-          setName(data.name)
-          setPhone(data.phone)
-          setCity(data.city)
-          setAddress(data.address)
-          setPostCode(data.postcode)
-          setJobTitle(data.job_title)
-          setRule(data.rule)
-          setLoading(false)
-          setInit(false)
-          return data
-        }
-
-      })
+    try {
+      const response = await axios.get(`/api/users/getuser?_id=${currentUser.id}`);
+  console.log("response: ",response)
+      if (response.data) {
+        setData(response.data)
+        setEmail(response.data.email)
+        setName(response.data.name)
+        setPhone(response.data.phone)
+        setCity(response.data.city)
+        setAddress(response.data.address)
+        setPostCode(response.data.postcode)
+        setJobTitle(response.data.job_title)
+        setRule(response.data.rule)
+        setLoading(false)
+        setInit(false)
+        
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    
   }, [])
 
   useEffect(async () => {
@@ -107,10 +111,13 @@ export default ({ currentUser }) => {
                 aria-label="scrollable auto tabs example"
               >
                 <Tab label="Saját profil" />
-                <Tab label="Munkatársak" />
+                {((currentUser) && (currentUser.job === "manager" || currentUser.job === "tulajdonos")) && <Tab label="Munkatársak" />}
+                {((currentUser) && (currentUser.job === "tulajdonos")) && <Tab label="Új munkatárs" />}
               </Tabs>
             </Box>
-            {value == 0 ? <PublicEditor currentUser={currentUser} /> : <PrivateEditor />}
+            {value == 0 && <PublicEditor currentUser={currentUser} />}
+            {value == 1 && ((currentUser) && (currentUser.job === "manager" || currentUser.job === "tulajdonos")) && <PrivateEditor />}
+            {value == 2 && ((currentUser) && (currentUser.job === "tulajdonos")) && <NewMember /> }
 
 
 

@@ -32,16 +32,25 @@ afterAll(async () => {
 });
 
 global.signin = async () => {
-  const email = 'test@test.com';
-  const password = 'password';
+  const email = 'teszt@teszt.com';
+  const password = '12345';
 
-  const response = await request(app)
+  await request(app)
     .post('/api/users/signup')
     .send({
       email,
       password
     })
     .expect(201);
+
+
+  const response = await request(app)
+    .post('/api/users/signin')
+    .send({
+      email: 'teszt@teszt.com',
+      password: '12345'
+    })
+    .expect(200);
 
   const cookie = response.get('Set-Cookie');
 

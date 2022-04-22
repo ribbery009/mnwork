@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import useRequest from "../../hooks/use-request";
 import Button from '../../components/button';
 import CustomSelect from "../../components/customSelect";
-import DatePicker from 'react-datepicker';
+import DatePicker, { registerLocale } from 'react-datepicker';
 import Router from "next/router";
+import { hu } from "date-fns/locale";
+registerLocale("hu", hu);
 
 export default ({ currentUser }) => {
 
@@ -26,7 +28,7 @@ export default ({ currentUser }) => {
     url: '/api/time/newtime',
     method: 'post',
     body: {
-      start: startDate, end: time, name_and_email: defaultSelectTextName + "-" + defaultSelectEmail, creator: currentUser.id, status: defaultSelectTextState
+      startDate: startDate, endDate: time, name_and_email: defaultSelectTextName + "-" + defaultSelectEmail, creator: currentUser.id, status: defaultSelectTextState
     },
     onSuccess: () => Router.push('/')
   });
@@ -67,6 +69,7 @@ export default ({ currentUser }) => {
   console.log(currentUser)
 
   return currentUser ? (
+    (currentUser.job === "manager" || currentUser.job === "tulajdonos") &&
     <div className='container'>
       <div className='row'>
         <div className='col-wrapper col'>
@@ -90,7 +93,8 @@ export default ({ currentUser }) => {
                   timeFormat="HH:mm"
                   timeIntervals={15}
                   timeCaption="time"
-                  dateFormat="MMMM d, yyyy h:mm aa"
+                  dateFormat="yyyy MMMM d, h:mm aa"
+                  locale="hu"
                 />
               </div>
               <div className="form-group">
@@ -102,13 +106,14 @@ export default ({ currentUser }) => {
                   timeFormat="HH:mm"
                   timeIntervals={15}
                   timeCaption="time"
-                  dateFormat="MMMM d, yyyy h:mm aa"
+                  dateFormat="yyyy MMMM d, h:mm aa"
+                  locale="hu"
                 />
               </div>
 
               {errors}
               <div className='button-wrapper'>
-                <Button classes="noselect" text={"Elküld"}></Button>
+                <Button classes="noselect" text={"Küldés"}></Button>
               </div>
 
             </form>

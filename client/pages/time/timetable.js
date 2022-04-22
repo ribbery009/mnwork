@@ -8,7 +8,7 @@ import useRequest from "../../hooks/use-request";
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { timeTableColumnsGenerator } from "../../entity/columnsTimeTable";
 import { FetchData } from '../../helpers/fetcData';
-import { hu } from "date-fns/locale";
+
 import { dataWrapper } from '../../helpers/dataMapper';
 import TabComponent from '../../components/tab/tab'
 import CustomClipLoader from "../../components/loader";
@@ -19,6 +19,7 @@ import { css } from "@emotion/react";
 import useFetch from "../../hooks/use-fetch";
 import NoData from "../../components/svg/no-data"
 import _ from 'lodash';
+import { hu } from "date-fns/locale";
 registerLocale("hu", hu);
 
 
@@ -42,7 +43,7 @@ export default ({ currentUser }) => {
 
   const [defaultSelectEmail, setDefaultSelectEmail] = useState("");
 
-  const [optionsList, setOptionList] = useState([ { name: "munka" }, { name: "szabad" }, { name: "beteg" }, { name: "itt van" }, { name: "zárva az étterem" }, { name: "nyaralás" }, { name: "késés" }])
+  const [optionsList, setOptionList] = useState([ { name: "munka" }, { name: "szabad" }, { name: "beteg" }, { name: "zárva az étterem" }, { name: "nyaralás" }, { name: "késés" }])
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date(new Date().setDate(startDate.getDate() + 1)));
 
@@ -187,7 +188,7 @@ console.log("activity: ",defaultSelectTextState)
                 <CustomSelect optionsList={optionsList} setDefaultSelectText={setDefaultSelectTextState} defaultSelectText={defaultSelectTextState} title={"Státusz"} />
                 {errorMessageTemplate}
                 <div className='button-wrapper'>
-                  <Button classes="noselect" text={"Elküld"}></Button>
+                  <Button classes="noselect" text={"Küldés"}></Button>
                 </div>
                 {table}
               </form>

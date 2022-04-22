@@ -66,7 +66,7 @@ const [classCss,setClass] = useState('');
           </button>
         </div>
         <Link href="/">
-          <a className="navbar-brand">DASHBOARD</a>
+          <a className="navbar-brand">Kezdőoldal</a>
         </Link>
       </div>
       <div className="d-flex justify-content-end">

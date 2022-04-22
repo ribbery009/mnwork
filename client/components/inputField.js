@@ -1,11 +1,9 @@
-const InputField = ({ onChange, value, label,classes }) => {
-
+const InputField = ({ onChange, value, label,classes,read }) => {
+console.log("read: ",read)
     return (
         <>
             <label>{label}</label>
-            <input onChange={onChange} value={value} className={classes}>
-
-            </input>
+            {read ? <input onChange={onChange} value={value} className={classes} readonly></input> : <input onChange={onChange} value={value} className={classes}/>}
         </>
 
     );

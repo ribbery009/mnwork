@@ -20,7 +20,7 @@ router.get('/api/time/get-time', async (req, res) => {
 
     let queryEnd = new Date(new Date(JSON.stringify(endDate)).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
     // var dateEndQuery = queryEnd.getFullYear() + '/' + (queryEnd.getMonth() + 1) + '/' + queryEnd.getDate();
-    new Date(new Date().toLocaleString("hu-HU", {timeZone: "Europe/Budapest"}))
+    
     if (email === "all") {
       usersList = timeList.map((time) => {
         const timeStart = new Date(time.start);

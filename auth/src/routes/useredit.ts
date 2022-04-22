@@ -32,21 +32,6 @@ router.post(
 
 
     await existingUser.save();
-  
-
-    // Generate JWT
-    const userJwt = jwt.sign(
-      {
-        id: existingUser.id,
-        email: existingUser.email,
-      },
-      process.env.JWT_KEY!
-    );
-
-    // Store it on session object
-    req.session = {
-      jwt: userJwt,
-    };
 
     res.status(201).send(existingUser);
   }
