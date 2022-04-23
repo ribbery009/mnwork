@@ -29,7 +29,7 @@ export default () => {
         <div className='col-wrapper col'>
           <div className='authWrapper'>
             <form onSubmit={onSubmit}>
-              <h3 className='form-title'>Bejelentkezés</h3>
+              <h3 className='form-title'>Bejelentkezés </h3>
               <div className="form-group">
                 <InputField label="E-mail" value={email} onChange={e => setEmail(e.target.value)} classes="form-control teszt" />
               </div>
