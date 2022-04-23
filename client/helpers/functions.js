@@ -24,20 +24,15 @@ export function getChartsLabels(startDate, diff) {
     futureMonth = moment(start).add((index + 1), 'M');
   }
 
-  console.log(filteredList)
-
   return filteredList;
 }
 
 //visszaadja a labeleket a chartsnak nevek alapján
 export function getChartsLabelsByNames(list) {
   var filteredList = [];
-console.log("list: ",list)
  list.map((item) =>{
   filteredList.push(item.name)
  })
-
- console.log("filteredList: ",filteredList)
   return filteredList;
 }
 
@@ -47,7 +42,6 @@ export function getNamesAndEmails(data) {
   const newList = { email: "all", job_title: "all", name: "Mindenki" }
   const newArray = [newList].concat(data)
 
-  console.log(newArray)
   return newArray
 }
 
@@ -62,8 +56,6 @@ export function monthDiff(d1, d2) {
 
 //visszaadja a labeleket a chartsnak
 export function getChartsData(data, labels) {
-  console.log("data: ", data)
-  console.log("labels: ", labels)
   const sumDays = [];
   for (let x = 0; x < labels.length; x++) {
     let num = 0;

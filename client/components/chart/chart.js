@@ -75,7 +75,6 @@ export default function Bar({dataList}) {
   };
 
   useEffect(() => {
-    console.log("dl: ",dataList)
     const ctx = canvasEl.current.getContext("2d");
     // const ctx = document.getElementById("myChart");
 
@@ -85,10 +84,7 @@ export default function Bar({dataList}) {
     gradient.addColorStop(1, colors.purple.zero);
 
     const weight = dataList.map(item => new Date(new Date(item.start).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" })));
-    console.log("weight: ",weight)
     const labels = dataList.map(item => item.name);
-
-    console.log(moment(new Date(new Date(dataList[0].start).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }))).format('YYYY-MM-DD HH:mm'))
     
     const data = {
       labels: labels,

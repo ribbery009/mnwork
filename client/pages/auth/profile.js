@@ -50,7 +50,6 @@ export default ({ currentUser }) => {
   });
 
   const handleChange = (event, newValue) => {
-    console.log("newValue", newValue)
     setValue(newValue);
   };
 
@@ -58,7 +57,6 @@ export default ({ currentUser }) => {
     setLoading(true)
     try {
       const response = await axios.get(`/api/users/getuser?_id=${currentUser.id}`);
-  console.log("response: ",response)
       if (response.data) {
         setData(response.data)
         setEmail(response.data.email)
@@ -88,7 +86,6 @@ export default ({ currentUser }) => {
 
   const onSubmit = async event => {
     event.preventDefault();
-    console.log(event)
     setDeleteValue(false);
   };
 

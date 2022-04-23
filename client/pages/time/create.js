@@ -66,8 +66,6 @@ export default ({ currentUser }) => {
     )
   }
 
-  console.log(currentUser)
-
   return currentUser ? (
     (currentUser.job === "manager" || currentUser.job === "tulajdonos") &&
     <div className='container'>

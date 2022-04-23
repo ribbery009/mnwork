@@ -71,7 +71,6 @@ export default ({ currentUser }) => {
     }, [])
 
     useEffect(async () => {
-        console.log("id: ", id)
         if (!init) {
             await doRequest();
         }
@@ -80,7 +79,6 @@ export default ({ currentUser }) => {
     useEffect(() => {
         if (!_.isNull(defaultSelectEmail)) {
             data.map((user) => {
-                console.log("user: ", user)
                 if (user.email === defaultSelectEmail) {
                     setEmail(user.email)
                     setName(user.name)
@@ -91,7 +89,6 @@ export default ({ currentUser }) => {
                     setJobTitle(user.job_title)
                     setRule(user.rule)
                     setId(user.id)
-                    console.log("user: ", user.id)
                 }
             })
         }

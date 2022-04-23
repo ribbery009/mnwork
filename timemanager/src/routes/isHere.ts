@@ -9,11 +9,8 @@ router.post(
   validateRequest,
   async (req: Request, res: Response) => {
     const { time_id } = req.body;
-    console.log("body: ",req.body)
-    console.log("time id: ",time_id)
     let existingRow = await Time.findOne({ "_id" : time_id });
     let dateNow = new Date(new Date().toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
-    console.log("existRow: ", existingRow)
     if (existingRow && existingRow.isChecked == false && existingRow.status == "munka" && existingRow.start.getFullYear() === dateNow.getFullYear() && existingRow.start.getMonth() === dateNow.getMonth() && existingRow.start.getDate() === dateNow.getDate()) {
 
       existingRow.isHere = true;

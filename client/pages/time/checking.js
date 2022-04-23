@@ -49,10 +49,7 @@ export default ({ currentUser }) => {
             fetch(`/api/time/get-time?activity=munka&startDate=${queryStartDate}&endDate=${queryEndDate}&email=${currentUser.email}`)
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data)
                     let usersList = data.map((user, index) => {
-                        console.log("currentU: ", currentUser)
-                        console.log(user)
                         let newData = {};
                         if (user) {
                             newData = user;

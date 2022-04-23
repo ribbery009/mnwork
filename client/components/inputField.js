@@ -1,5 +1,4 @@
 const InputField = ({ onChange, value, label,classes,read }) => {
-console.log("read: ",read)
     return (
         <>
             <label>{label}</label>

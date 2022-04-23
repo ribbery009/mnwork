@@ -32,7 +32,6 @@ export default function BarPage() {
 
                      data = await FetchData(url);
 
-                     console.log("data: ", data)
                      if (data && data !== "no data!" && data.length > 0) {
 
                             let filteredList;
@@ -63,10 +62,6 @@ export default function BarPage() {
                      setDownloadButton(<button onClick={(e) => barPDF(e)}>Download</button>)
               }
        }, [list])
-
-
-       console.log("list: ", list)
-       console.log("list: ", list ? "ok" : "undifined")
 
        const barPDF = e => {
               /////////////////////////////

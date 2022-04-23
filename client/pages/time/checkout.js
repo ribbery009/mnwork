@@ -45,10 +45,9 @@ export default ({ currentUser }) => {
         fetch(`/api/time/get-time?activity=munka&startDate=${queryStartDate}&endDate=${queryEndDate}&email=${currentUser.email}`)
             .then((res) => res.json())
             .then((data) => {
-                console.log(data)
+      
                 let usersList = data.map((user, index) => {
-                    console.log("currentU: ", currentUser)
-                    console.log(user)
+         
                     let newData = {};
                     if (user) {
                         newData = user;
@@ -64,8 +63,6 @@ export default ({ currentUser }) => {
             })
     }, [])
 
-    console.log(data[0]?.status === "munka") && (data[0]?.isChecked) && !(data[0]?.isFinished)
-    console.log(data[0])
     return currentUser ? (
         (data[0]?.status === "munka") && (data[0]?.isChecked) && !(data[0]?.isFinished)?
             (<div className='authWrapper'>

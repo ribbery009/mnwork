@@ -28,7 +28,6 @@ export default function TabComponent({ data, columns, paginationProp, startDate,
 
 
         if (!_.isNull(list) && !_.isNull(list.lateList) && list.lateList.length > 0) {
-            console.log("late: ",list.lateList)
             chartLabelsLate = getChartsLabelsByNames(list.lateList);
             // lateData = getChartsDataByNames(list, chartLabelsLate);
             for (let index = 0; index < chartLabelsLate.length; index++) {
@@ -42,7 +41,6 @@ export default function TabComponent({ data, columns, paginationProp, startDate,
         }
 
         if (!_.isNull(list) && !_.isNull(list.activeList) && list.activeList.length > 0) {
-            console.log("active: ",list.activeList)
             chartLabelsActive = getChartsLabelsByNames(list.activeList);
             // activeData = getChartsDataByNames(list, chartLabelsActive);
 

@@ -50,58 +50,6 @@ export default ({ currentUser }) => {
         onSuccess: () => Router.push('/')
     });
 
-    // useEffect(() => {
-    //     setLoading(true)
-    //     fetch(`/api/users/getusers`)
-    //         .then((res) => res.json())
-    //         .then((data) => {
-    //             if (data) {
-    //                 setData(data)
-    //                 setLoading(false)
-    //                 setInit(false)
-    //                 return data
-    //             }
-    //         })
-    // }, [])
-
-    // useEffect(async () => {
-    //     console.log("id: ", id)
-    //     if (!init) {
-    //         await doRequest();
-    //     }
-    // }, [clickEvent])
-
-    // useEffect(() => {
-    //     if (!_.isNull(defaultSelectEmail)) {
-    //         data.map((user) => {
-    //             console.log("user: ", user)
-    //             if (user.email === defaultSelectEmail) {
-    //                 setEmail(user.email)
-    //                 setName(user.name)
-    //                 setPhone(user.phone)
-    //                 setCity(user.city)
-    //                 setAddress(user.address)
-    //                 setPostCode(user.postcode)
-    //                 setJobTitle(user.job_title)
-    //                 setRule(user.rule)
-    //                 setId(user.id)
-    //                 console.log("user: ", user.id)
-    //             }
-    //         })
-    //     }
-
-    // }, [defaultSelectEmail])
-
-    // const clickMethod = e => {
-    //     setClickValue(e.target.id)
-    //     setClickEvent(!clickEvent)
-    // }
-
-    // const editMethod = e => {
-    //     setClickValue(e.target.id)
-    //     setClickEvent(!clickEvent)
-    // }
-
     const onSubmit = async event => {
         event.preventDefault();
         await doRequest();

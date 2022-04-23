@@ -10,7 +10,6 @@ router.get('/api/users/getuser', async (req, res) => {
     if (req.query && req.query["_id"]) {
     const _id  = req.query["_id"];
     userCurrent = await User.findOne({ "_id" : _id });
-console.log(userCurrent)
 }else {
         throw new BadRequestError('Invalid credentials');
     }

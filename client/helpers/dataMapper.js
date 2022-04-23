@@ -4,7 +4,6 @@ import moment from "moment";
 
 export function dataWrapper(array, icon) {
 
-  console.log("Array: ",array)
   const newArray = array.map((user, index) => {
     const startT = timeNow(user.start);
     const endT = timeNow(user.end);

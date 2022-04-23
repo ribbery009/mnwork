@@ -12,8 +12,6 @@ router.get('/api/time/get-time', async (req, res) => {
   let newRow = {};
   var respList = new Array();
 
-  console.log("resplist: ", respList)
-  console.log("req query: ", req.query)
   if (activity && startDate && endDate && email) {
     let queryStart = new Date(new Date(JSON.stringify(startDate)).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
     // var dateQuery = queryStart.getFullYear() + '/' + (queryStart.getMonth() + 1) + '/' + queryStart.getDate();
@@ -41,7 +39,6 @@ router.get('/api/time/get-time', async (req, res) => {
       })
     }
     else {
-      console.log("query:",req.query)
       usersList = timeList.map((time) => {
         const timeStart = new Date(time.start);
         const timeEnd = new Date(time.end);
@@ -57,7 +54,6 @@ router.get('/api/time/get-time', async (req, res) => {
         //   respList.push(time);
         // }
         else if (queryStart <= timeStart && queryEnd >= timeEnd && time.late == true && time.user_email === email && activity==="késés") {
-          console.log("késés")
           newRow = time;
           respList.push(time);
         }

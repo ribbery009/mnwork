@@ -59,11 +59,6 @@ moment.locale();
 
 export default function ChartComponent({ dataList,name,status,labels,colors }) {
 
-    
-console.log("colors: ",colors)
-
-console.log("colors: ",dataList)
-
 
     const data = {
         backgroundColor: colors.map((color) => {return color}),

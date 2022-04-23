@@ -40,7 +40,6 @@ export default function Table({ data, columns, paginationProp }) {
     const pageItems = toPages(pages);
     const nextDisabled = currentPage === pageItems.length;
     const previosDisabled = currentPage === 1;
-    console.log("data: ", data)
     return (
       <nav>
         <ul className="pagination">

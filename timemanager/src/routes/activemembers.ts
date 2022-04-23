@@ -17,14 +17,12 @@ router.get('/api/time/activemembers', async (req, res) => {
     let timeNow = new Date(new Date().toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
     // var dateQuery = queryStart.getFullYear() + '/' + (queryStart.getMonth() + 1) + '/' + queryStart.getDate();
 
-    console.log("timeNow: ", timeNow.toDateString())
     timeList.map((time) => {
         const timeStart = new Date(new Date(time.start).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
 
         const timeEnd = new Date(new Date(time.end).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
 
-        console.log("timeStart: ", timeStart.toDateString())
-        console.log("equal: ", timeStart.toDateString() === timeNow.toDateString())
+    
         if (timeNow.toDateString() === timeStart.toDateString() && timeNow.toDateString() === timeEnd.toDateString() && time.isHere && time.status === "munka") {
             usersList.activeList.push(time);
             // activeList.push(time);

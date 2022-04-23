@@ -44,29 +44,25 @@ router.post(
 
     const startQuery = new Date(new Date(startDate).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
     const endQuery = new Date(new Date(endDate).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
-    const diffTime = Math.abs(endQuery.getTime() - startQuery.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-    console.log("start: ", startQuery)
-    console.log("end: ", endQuery)
-    console.log("diffdays: ", diffDays)
+    startQuery.setHours(0,0,0);
+    endQuery.setHours(0,0,0);
+    const diffDays = Math.floor((endQuery.getTime() - startQuery.getTime())/(24*3600*1000));
 
 
-    //ha nagyobb az intervallum
+    //ha egyenlőek a napok
     if (startQuery.getFullYear() === endQuery.getFullYear() && startQuery.getMonth() === endQuery.getMonth() && startQuery.getDate() === endQuery.getDate()) {
-      let start = new Date(new Date(startQuery).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
-      let end = new Date(new Date(endQuery).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
+      let start = new Date(new Date(startDate).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
+      let end = new Date(new Date(endDate).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
       const time = Time.build({ start, end, name, late, late_time_min, creator, isHere, status, live_start, live_end, user_email, isFinished, isChecked });
       time.save();
       timeArray.push(time);
     } else {
       for (let index = 0; index <= diffDays; index++) {
-        let start = new Date(startQuery);
-        console.log("startT: ", start)
-        let end = new Date(endQuery);
+        let start = new Date(new Date(startDate).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
+        let end = new Date(new Date(endDate).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }));
         end.setDate(end.getDate() - (diffDays - index));
         start.setDate(start.getDate() + index);
-        console.log("startTTT: ", start)
         const time = Time.build({ start, end, name, late, late_time_min, creator, isHere, status, live_start, live_end, user_email, isFinished, isChecked });
         time.save();
         timeArray.push(time)

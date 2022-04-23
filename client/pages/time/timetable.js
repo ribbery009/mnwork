@@ -113,7 +113,6 @@ export default ({ currentUser }) => {
   const handChangeRowID = (row, e) => {
     e.preventDefault();
     setRowId(row.timeId)
-    console.log(row.timeId)
   }
 
   const handleDelete = () => {

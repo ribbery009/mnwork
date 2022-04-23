@@ -15,12 +15,11 @@ export default function TabComponent({ data, columns, paginationProp, startDate,
         //labels
         const chartLabels = getChartsLabels(startDate, diff);
 
-        console.log("chartLabels: ",chartLabels)
+
         let monthData;
         let rgbArray = [];
         if (!_.isNull(list)) {
-            console.log("List: ",list)
-console.log(status)
+
             if(status === "mindegyik"){
 
             }else{
@@ -34,22 +33,16 @@ console.log(status)
 
 
         }
-        console.log("dataList: ",monthData);
+
         setChartComponent(<ChartComponent dataList={monthData} labels={chartLabels} colors={rgbArray} />)
 
     }, [list])
 
-    
-    useEffect(() => {
-
-console.log("status: ",status)
-    }, [status])
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-    console.log(status)
     const allName = (name === "Mindenki");
     //MEgnézem, hogy a startDate és endDate =? a mai nappal és a következő nappal
 
@@ -64,7 +57,6 @@ console.log("status: ",status)
     //2 dátum különbsége
     const diff = monthDiff(startDate, endDate);
 
-    console.log(chartComponent)
     return (
         <>
             {!(_.isNull(chartComponent)) && chartComponent}

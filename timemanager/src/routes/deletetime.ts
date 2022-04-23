@@ -32,7 +32,6 @@ router.post(
     const { user_id } = req.body;
     const articleID = Mongoose.Types.ObjectId(user_id);
 
-    console.log(articleID);
   let timeHelper = null;
     if(articleID){
 
@@ -47,9 +46,7 @@ router.post(
      return res.status(200).send("ok");
       
     }
-    
 
-  console.log(timeHelper)
 if(timeHelper != null){
    return res.status(201).send("Successfull delete!");
 }else{
