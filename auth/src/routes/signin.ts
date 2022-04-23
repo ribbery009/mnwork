@@ -45,7 +45,7 @@ router.post(
       process.env.JWT_KEY!
     );
 
- 
+ console.log("userJwt: ",userJwt)
     // Store it on session object
     req.session = {
       jwt: userJwt,

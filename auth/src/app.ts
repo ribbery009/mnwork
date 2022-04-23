@@ -24,6 +24,7 @@ app.use(
   })
 );
 
+
 app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
@@ -32,6 +33,7 @@ app.use(getUsers);
 app.use(getUser);
 app.use(userEditRouter);
 app.use(deleteUser);
+
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();
